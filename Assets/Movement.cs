@@ -8,6 +8,9 @@ public class Movement : MonoBehaviour {
 
 	private int horizontal, vertical;
 
+	public Vector2 speed = new Vector2(1, 1);
+	
+	private Vector2 movement;
 
 
 	// Use this for initialization
@@ -20,23 +23,25 @@ public class Movement : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
 	{
-		float temp;
 
-		temp = Input.GetAxis ("Horizontal");
-		if (temp > 0) {
-						horizontal = 1;
-				} else if (temp == 0) {
-						horizontal = 0;
-				} else {
+		float inputX = Input.GetAxis("Horizontal");
+		float inputY = Input.GetAxis("Vertical");
+
+		// Animacao
+
+		if (inputX > 0) {
+			horizontal = 1;
+		} else if (inputX == 0) {
+			horizontal = 0;
+		} else {
 			horizontal = -1;
-				}
+		}
 
 		playerAnimator.SetInteger ("Horizontal", horizontal);
 
-		temp = Input.GetAxis ("Vertical");
-		if (temp > 0) {
+		if (inputY > 0) {
 			vertical = 1;
-		} else if (temp == 0) {
+		} else if (inputY == 0) {
 			vertical = 0;
 		} else {
 			vertical = -1;
@@ -46,6 +51,22 @@ public class Movement : MonoBehaviour {
 		
 
 
+		// movement
+
+		Vector2 input = new Vector2 (inputX, inputY);
+		//input = input.normalized;
+		movement = new Vector2(
+			speed.x * input.x,
+			speed.y * input.y);
+		
+
+
 
 	}
+	
+	void FixedUpdate()
+	{
+		rigidbody2D.velocity = movement;
+	}
+
 }
