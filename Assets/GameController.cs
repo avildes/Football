@@ -153,7 +153,7 @@ public class GameController : MonoBehaviour
             else
             {
                 Vector3 pos = enemies[i].transform.position;
-                pos.y -= 1;
+                pos.y -= 2;
                 enemies[i].transform.position = pos;
             }
         }
