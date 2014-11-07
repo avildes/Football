@@ -14,6 +14,7 @@ public class PressStartScript : MonoBehaviour {
         {
             Application.LoadLevel("game");
         }
+		if (Input.GetKeyDown(KeyCode.Escape)) { Application.Quit(); }
 	}
 
     IEnumerator Flash()

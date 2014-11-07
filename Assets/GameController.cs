@@ -7,7 +7,7 @@ public class GameController : MonoBehaviour
     private float enemySpeed;
     private float verticalDirection;
 
-    private int score = 0;
+    private float score = 0;
 
     public GameObject player;
 
@@ -46,6 +46,12 @@ public class GameController : MonoBehaviour
     private float enemySpawnYPosition;
     private float enemyDestroyYPosition;
 
+	private bool enableCollision;
+
+	private float scoreIncrement;
+
+	private int distanciaEntreSpawns;
+
     void Start()
     {
         source = GetComponent<AudioSource>();
@@ -76,6 +82,12 @@ public class GameController : MonoBehaviour
 
         enemySpawnYPosition = BalanceClass.Instance.enemySpawnYPosition;
         enemyDestroyYPosition = BalanceClass.Instance.enemyDestroyYPosition;
+
+		enableCollision = BalanceClass.Instance.enableCollision;
+
+		scoreIncrement = BalanceClass.Instance.scoreIncrement;
+
+		distanciaEntreSpawns = BalanceClass.Instance.distanciaEntreSpawns;
     }
 
     void GetTouches()
@@ -108,14 +120,14 @@ public class GameController : MonoBehaviour
 
     void Update()
     {
-
-        SetSpeedAtTime(intervalosDeIncrementoDeVelocidade, incrementosDeVelocidade);
-
-        tempoTotal += Time.deltaTime;
-
         if (!gameOver)
         {
-            /*
+			tempoTotal += Time.deltaTime;
+			UpdateVariables();
+			SetSpeedAtTime(intervalosDeIncrementoDeVelocidade, incrementosDeVelocidade);
+            
+			UpdateScore();
+			/*
             increment += Time.deltaTime;
             if (score > 100) increment += Time.deltaTime;
             
@@ -135,22 +147,35 @@ public class GameController : MonoBehaviour
             MoveEnemies();
             InstantiateEnemies();
 
-            if (Collides())
-            {
-                GameOver();
-            }
+			if(enableCollision)
+			{
+	            if (Collides())
+	            {
+	               GameOver();
+	            }
+			}
         }
         else if ((Input.touchCount == 1 && Input.touches[0].phase.Equals(TouchPhase.Ended)) || Input.GetKeyDown(KeyCode.Space))
         {
             Application.LoadLevel("game");
         }
+		else
+		{
+			if (Input.GetKeyDown(KeyCode.Escape)) { Application.LoadLevel("start"); }
+		}
     }
+
+	void UpdateScore()
+	{
+		score += (scoreIncrement * enemySpeed);
+		scoreObj.GetComponent<TextMesh>().text = (int)score + "";
+	}
 
     bool CanCreate()
     {
         if (enemies.Count < 1) return true;
-        if (enemies.Count < 2 && enemies[0].transform.position.y < 0) return true;
-        if (enemies[enemies.Count - 1].transform.position.y < 0) return true;
+        if (enemies.Count < 2 && enemies[0].transform.position.y < distanciaEntreSpawns) return true;
+		if (enemies[enemies.Count - 1].transform.position.y < distanciaEntreSpawns) return true;
         return false;
     }
 
@@ -158,7 +183,6 @@ public class GameController : MonoBehaviour
     {
         PlayTouchFX();
 
-        score++;
         /*
         Vector3 size = timerObj.transform.localScale;
         size.x += (1 / increment) * 400;
@@ -172,8 +196,7 @@ public class GameController : MonoBehaviour
             timerObj.transform.localScale = size;
         }
         */
-        scoreObj.GetComponent<TextMesh>().text = score + "";
-
+        
         if (side == -1) // left
         {
             player.transform.position = new Vector3(-1, -4, 0);
@@ -314,10 +337,12 @@ public class GameController : MonoBehaviour
 
         gameOver = true;
 
-        if (LoadBest() < score)
+		int sc = (int) score;
+
+        if (LoadBest() < sc)
         {
-            SaveBest(score);
-            bestObj.GetComponent<TextMesh>().text = score.ToString();
+            SaveBest(sc);
+            bestObj.GetComponent<TextMesh>().text = (sc).ToString();
         }
     }
 
@@ -338,16 +363,17 @@ public class GameController : MonoBehaviour
         source.Play();
     }
 
-    void SaveBest(int score)
+    void SaveBest(int _score)
     {
-        PlayerPrefs.SetInt("Best", score);
+        PlayerPrefs.SetInt("Best", _score);
     }
 
     int LoadBest()
     {
         if (PlayerPrefs.HasKey("Best"))
         {
-            return PlayerPrefs.GetInt("Best", score);
+            return PlayerPrefs.GetInt("Best");
+
         }
 
         return 0;

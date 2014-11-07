@@ -4,6 +4,8 @@ using System.Collections.Generic;
 
 public class BalanceClass : MonoBehaviour
 {
+	public bool enableCollision = true;
+
     public float enemySpawnYPosition = 2f;
     public float enemyDestroyYPosition = -5f;
 
@@ -25,6 +27,10 @@ public class BalanceClass : MonoBehaviour
 
     public float distanciaColisaoAposInimigo = 0f;
     public float distanciaColisaoAntesInimigo = 1f;
+
+	public float scoreIncrement = .1f;
+
+	public int distanciaEntreSpawns = 1;
 
     public static BalanceClass Instance { get; private set; }
 
