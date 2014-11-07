@@ -1,32 +1,65 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class BackgroundControl : MonoBehaviour
 {
+	public float speed;
+	public float verticalDirection;
 
-	public float speed = 2f;
-	public float verticalDirection = -1f;
+    private List<Transform> imgs;
+    private Transform first;
+    private Transform last;
+
+    private int lastPosition;
+
+    public bool gameOver = false;
+
+    void Update()
+    {
+        speed = BalanceClass.Instance.bgSpeed;
+        verticalDirection = BalanceClass.Instance.bgVerticalDirection;
+    }
 
 	void Start ()
 	{
-	
+        imgs = new List<Transform>();
+
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            imgs.Add(transform.GetChild(i));
+        }
+
+        lastPosition = imgs.Count - 1;
+        first = imgs[0];
+        last = imgs[lastPosition];
 	}
 
 	void FixedUpdate ()
 	{
-		Transform lastBg = GetLastBgImg();
-		Transform firstBg = GetLastBgImg();
-
-		if(lastBg.position.y < -7)
-		{
-			Vector3 newPos = firstBg.position;
+		if(last.position.y < -7)
+        {
+            Vector3 newPos = first.position;
 			newPos.y += 3.15f;
-			lastBg.position = newPos;
-		}
+			last.position = newPos;
 
-		MoveChildren();
-		//transform.Translate(new Vector3(0, speed * verticalDirection * Time.deltaTime, 0));
+            first = last;
+            last = GetAntecedent();
+        }
+        
+        if(!gameOver)
+        {
+            MoveChildren();
+        }
 	}
+
+    private Transform GetAntecedent()
+    {
+        int pos = (lastPosition - 1) % imgs.Count;
+        pos = pos < 0 ? pos + imgs.Count : pos;
+        lastPosition = pos;
+        return imgs[pos];
+    }
 
 	void MoveChildren()
 	{
@@ -36,31 +69,13 @@ public class BackgroundControl : MonoBehaviour
 		}
 	}
 
-	Transform GetFirstBgImg()
-	{
-		Transform retorno = null;
-		
-		for (int i = 0; i < transform.childCount; i++) 
-		{
-			if((retorno == null) || transform.GetChild(i).position.y > retorno.position.y)
-			{
-				retorno = transform.GetChild(i);
-			}
-		}
-		return retorno;
-	}
+    void SetGameOver(bool value)
+    {
+        gameOver = value;
+    }
 
-	Transform GetLastBgImg()
-	{
-		Transform retorno = null;
-
-		for (int i = 0; i < transform.childCount; i++) 
-		{
-			if((retorno == null) || transform.GetChild(i).position.y < retorno.position.y)
-			{
-				retorno = transform.GetChild(i);
-			}
-		}
-		return retorno;
-	}
+    void SetSpeed(float value)
+    {
+        speed = value;
+    }
 }

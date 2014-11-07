@@ -4,6 +4,9 @@ using System.Collections.Generic;
 
 public class GameController : MonoBehaviour
 {
+    private float enemySpeed;
+    private float verticalDirection;
+
     private int score = 0;
 
     public GameObject player;
@@ -24,12 +27,24 @@ public class GameController : MonoBehaviour
 
     private bool create = false;
 
-    private float increment = 50;
+    private List<float> intervalosDeIncrementoDeVelocidade;
+    private List<float> incrementosDeVelocidade;
+
+    private List<float> intervalosDeIncrementoProbabilidadeSpawn;
+    private List<float> incrementosProbabilidadeSpawn;
+
+    private float tempoTotal;
 
     private AudioSource source;
 
-    public AudioClip touchFX;
-    public AudioClip dieFX;
+    private AudioClip touchFX;
+    private AudioClip dieFX;
+
+    private float distanciaColisaoAposInimigo;
+    private float distanciaColisaoAntesInimigo;
+
+    private float enemySpawnYPosition;
+    private float enemyDestroyYPosition;
 
     void Start()
     {
@@ -37,6 +52,30 @@ public class GameController : MonoBehaviour
         source.loop = false;
 
         bestObj.GetComponent<TextMesh>().text = LoadBest().ToString();
+
+        UpdateVariables();
+    }
+
+    void UpdateVariables()
+    {
+        enemySpeed = BalanceClass.Instance.enemySpeed;
+        verticalDirection = BalanceClass.Instance.enemyVerticalDirection;
+
+        intervalosDeIncrementoDeVelocidade = BalanceClass.Instance.intervalosDeIncrementoDeVelocidade;
+        incrementosDeVelocidade = BalanceClass.Instance.incrementosDeVelocidade;
+
+        intervalosDeIncrementoProbabilidadeSpawn = BalanceClass.Instance.intervalosDeIncrementoProbabilidadeSpawn;
+        incrementosProbabilidadeSpawn = BalanceClass.Instance.incrementosProbabilidadeSpawn;
+
+        touchFX = BalanceClass.Instance.touchFX;
+
+        dieFX = BalanceClass.Instance.dieFX;
+
+        distanciaColisaoAposInimigo = BalanceClass.Instance.distanciaColisaoAposInimigo;
+        distanciaColisaoAntesInimigo = BalanceClass.Instance.distanciaColisaoAntesInimigo;
+
+        enemySpawnYPosition = BalanceClass.Instance.enemySpawnYPosition;
+        enemyDestroyYPosition = BalanceClass.Instance.enemyDestroyYPosition;
     }
 
     void GetTouches()
@@ -69,11 +108,17 @@ public class GameController : MonoBehaviour
 
     void Update()
     {
+
+        SetSpeedAtTime(intervalosDeIncrementoDeVelocidade, incrementosDeVelocidade);
+
+        tempoTotal += Time.deltaTime;
+
         if (!gameOver)
         {
+            /*
             increment += Time.deltaTime;
             if (score > 100) increment += Time.deltaTime;
-
+            
             Vector3 size = timerObj.transform.localScale;
             size.x -= (Time.deltaTime * increment);
 
@@ -83,14 +128,30 @@ public class GameController : MonoBehaviour
             {
                 GameOver();
             }
-
+            */
             GetTouches();
             GetKeys();
+
+            MoveEnemies();
+            InstantiateEnemies();
+
+            if (Collides())
+            {
+                GameOver();
+            }
         }
-        else if((Input.touchCount == 1 && Input.touches[0].phase.Equals(TouchPhase.Ended)) || Input.GetKeyDown(KeyCode.Space))
+        else if ((Input.touchCount == 1 && Input.touches[0].phase.Equals(TouchPhase.Ended)) || Input.GetKeyDown(KeyCode.Space))
         {
             Application.LoadLevel("game");
         }
+    }
+
+    bool CanCreate()
+    {
+        if (enemies.Count < 1) return true;
+        if (enemies.Count < 2 && enemies[0].transform.position.y < 0) return true;
+        if (enemies[enemies.Count - 1].transform.position.y < 0) return true;
+        return false;
     }
 
     void MovePlayer(int side)
@@ -98,7 +159,7 @@ public class GameController : MonoBehaviour
         PlayTouchFX();
 
         score++;
-
+        /*
         Vector3 size = timerObj.transform.localScale;
         size.x += (1 / increment) * 400;
         if (size.x < 25) size.x = 25;
@@ -110,7 +171,7 @@ public class GameController : MonoBehaviour
             size.x = 200;
             timerObj.transform.localScale = size;
         }
-
+        */
         scoreObj.GetComponent<TextMesh>().text = score + "";
 
         if (side == -1) // left
@@ -121,30 +182,39 @@ public class GameController : MonoBehaviour
         {
             player.transform.position = new Vector3(1, -4, 0);
         }
-
+        /*
         MoveEnemy();
 
         if (Collides())
         {
             GameOver();
-        }
+        }*/
     }
+
 
     bool Collides()
     {
         for (int i = 0; i < enemies.Count; i++)
         {
-            if (player.transform.position.Equals(enemies[i].transform.position))
+            Vector3 enemyPos = enemies[i].transform.position;
+            Vector3 playerPos = player.transform.position;
+
+            float distance = enemyPos.y - playerPos.y;
+            if (distance < distanciaColisaoAposInimigo) return false;
+
+            if (((enemyPos.y - playerPos.y) < distanciaColisaoAntesInimigo) && (playerPos.x == enemyPos.x))
                 return true;
         }
         return false;
     }
 
-    void MoveEnemy()
+    void MoveEnemies()
     {
         for (int i = 0; i < enemies.Count; i++)
         {
-            if (enemies[i].transform.position.y < -4)
+            enemies[i].transform.Translate(new Vector3(0, enemySpeed * verticalDirection * Time.deltaTime, 0));
+
+            if (enemies[i].transform.position.y < enemyDestroyYPosition)
             {
                 Destroy(enemies[i]);
                 enemies.RemoveAt(i);
@@ -153,41 +223,85 @@ public class GameController : MonoBehaviour
             else
             {
                 Vector3 pos = enemies[i].transform.position;
-                pos.y -= 2;
-                enemies[i].transform.position = pos;
+                //pos.y -= 2;
+                if (pos.y < -4)
+                {
+                    enemies[i].GetComponent<SpriteRenderer>().sortingOrder = 5;
+                }
+                //enemies[i].transform.position = pos;
             }
         }
+    }
 
-        if (create)
+    void InstantiateEnemies()
+    {
+        if (CanCreate())
         {
-            float x = UnityEngine.Random.value;
+            if (create)
+            {
+                float x = UnityEngine.Random.value;
 
-            x = (x < .5f) ? -1 : 1;
+                x = (x < .5f) ? -1 : 1;
 
-            GameObject enemy = Instantiate(enemyPrefab, new Vector3(x, 2, 0), Quaternion.identity) as GameObject;
+                GameObject enemy = Instantiate(enemyPrefab, new Vector3(x, enemySpawnYPosition, 0), Quaternion.identity) as GameObject;
 
-            enemies.Add(enemy);
+                enemies.Add(enemy);
+            }
+
+            SetSpawnChanceAtTime(intervalosDeIncrementoProbabilidadeSpawn, incrementosProbabilidadeSpawn);
+            /*
+            if (score < 20)
+            {
+                float b = UnityEngine.Random.value;
+                create = (b < .5f) ? false : true;
+            }
+            else if (score < 40)
+            {
+                float b = UnityEngine.Random.value;
+                create = (b < .3f) ? false : true;
+            }
+            else
+            {
+                float b = UnityEngine.Random.value;
+                create = (b < .1f) ? false : true;
+            }*/
         }
+    }
 
-        if (score < 20)
+    void SetCreate(float chance)
+    {
+        float b = UnityEngine.Random.value;
+        create = (b > chance) ? false : true;
+    }
+
+    void SetSpawnChanceAtTime(List<float> times, List<float> values)
+    {
+        for (int i = times.Count - 1; i > -1; i--)
         {
-            float b = UnityEngine.Random.value;
-            create = (b < .5f) ? false : true;
+            if (tempoTotal > times[i])
+            {
+                SetCreate(values[i]);
+                return;
+            }
         }
-        else if (score < 40)
+    }
+
+    void SetSpeedAtTime(List<float> times, List<float> values)
+    {
+        for (int i = times.Count-1; i > -1; i--)
         {
-            float b = UnityEngine.Random.value;
-            create = (b < .3f) ? false : true;
-        }
-        else
-        {
-            float b = UnityEngine.Random.value;
-            create = (b < .1f) ? false : true;
+            if(tempoTotal > times[i])
+            {
+                SetSpeed(values[i]);
+                return;
+            }
         }
     }
 
     void GameOver()
     {
+        SendGameOverToBGController(true);
+
         PlayDieFX();
 
         player.SetActive(false);
@@ -205,6 +319,11 @@ public class GameController : MonoBehaviour
             SaveBest(score);
             bestObj.GetComponent<TextMesh>().text = score.ToString();
         }
+    }
+
+    void SendGameOverToBGController(bool value)
+    {
+        GameObject.FindGameObjectWithTag("BackgroundControl").SendMessage("SetGameOver", value, SendMessageOptions.DontRequireReceiver);
     }
 
     void PlayTouchFX()
@@ -232,5 +351,11 @@ public class GameController : MonoBehaviour
         }
 
         return 0;
+    }
+
+    void SetSpeed(float value)
+    {
+        enemySpeed = value;
+        GameObject.FindGameObjectWithTag("BackgroundControl").SendMessage("SetSpeed", value, SendMessageOptions.DontRequireReceiver);
     }
 }
