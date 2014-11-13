@@ -40,6 +40,8 @@ public class BalanceClass : MonoBehaviour
 
 	public int scoreCheckpoint = 50;
 
+	public bool resetHiScore;
+
     public static BalanceClass Instance { get; private set; }
 
     void Awake()

@@ -72,6 +72,8 @@ public class GameController : MonoBehaviour
 
 	private AudioSource touchSource;
 
+	private bool resetHiScore;
+
     void Start()
     {
         //TeamSelection.Instance.PaintSprite("black");
@@ -90,6 +92,11 @@ public class GameController : MonoBehaviour
         UpdateVariables();
 
 		scoreCheck = scoreCheckpoint;
+
+		if(resetHiScore)
+		{
+			SaveBest(0);
+		}
     }
 
     void UpdateVariables()
@@ -125,6 +132,8 @@ public class GameController : MonoBehaviour
 		enemyLookDistance = BalanceClass.Instance.enemyLookDistance;
 
 		scoreCheckpoint = BalanceClass.Instance.scoreCheckpoint;
+
+		resetHiScore = BalanceClass.Instance.resetHiScore;
     }
 
     void GetTouches()
