@@ -4,6 +4,8 @@ using System.Collections.Generic;
 
 public class GameController : MonoBehaviour
 {
+	public GameObject touchAudioSource;
+
 	public GameObject encore;
 	
     public GameObject player;
@@ -68,6 +70,8 @@ public class GameController : MonoBehaviour
 	private AudioClip encoreClip;
 	private AudioClip checkpointClip;
 
+	private AudioSource touchSource;
+
     void Start()
     {
         //TeamSelection.Instance.PaintSprite("black");
@@ -75,6 +79,10 @@ public class GameController : MonoBehaviour
         source = GetComponent<AudioSource>();
         source.loop = false;
 
+		touchSource = touchAudioSource.GetComponent<AudioSource>();
+		touchSource.loop = false;
+
+		
 		bestScore = LoadBest();
 
         bestObj.GetComponent<TextMesh>().text = bestScore.ToString();
@@ -410,8 +418,8 @@ public class GameController : MonoBehaviour
 
     void PlayTouchFX()
     {
-        source.clip = touchFX;
-        source.Play();
+        touchSource.clip = touchFX;
+		touchSource.Play();
     }
 
     void PlayDieFX()
