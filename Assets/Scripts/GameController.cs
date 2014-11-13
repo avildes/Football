@@ -70,6 +70,8 @@ public class GameController : MonoBehaviour
 
     void Start()
     {
+        //TeamSelection.Instance.PaintSprite("black");
+
         source = GetComponent<AudioSource>();
         source.loop = false;
 
@@ -192,8 +194,6 @@ public class GameController : MonoBehaviour
 		score += (scoreIncrement * enemySpeed);
 		scoreObj.GetComponent<TextMesh>().text = (int)score + "";
 
-		
-		Debug.Log(":" + scoreCheck);
 		if(score > scoreCheck)
 		{
 			Debug.Log("Checkpoint");

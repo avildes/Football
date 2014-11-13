@@ -37,10 +37,10 @@ public class BackgroundControl : MonoBehaviour
 
 	void FixedUpdate ()
 	{
-		if(last.position.y < -7)
+		if(last.position.y < -8)
         {
             Vector3 newPos = first.position;
-			newPos.y += 3.15f;
+            newPos.y += 6.30f;
 			last.position = newPos;
 
             first = last;
