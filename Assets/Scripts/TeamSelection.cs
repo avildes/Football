@@ -4,17 +4,13 @@ using System.Collections.Generic;
 
 public class TeamSelection : MonoBehaviour
 {
-    //public static TeamSelection Instance;
+	public GameObject homeTeam;
 
-    public Texture2D targetTexture;
+	public GameObject teamTeam;
+	
+    private Texture2D targetTexture;
 
-	public Texture2D sourceTexture;
-    /*void Awake()
-    {
-        Instance = this;
-    }*/
-
-    Color32[] originalPixelMatrix;
+	private Texture2D sourceTexture;
 
     void Update()
     {
@@ -30,14 +26,19 @@ public class TeamSelection : MonoBehaviour
             PaintItBack();
         }
     }
-
-
+	
     void Destroy()
     {
         //BackToOriginalPixelMatrix(texture, originalPixelMatrix);
     }
 
-    private void PaintItBack()
+	private void PaintBaseTexture(Texture2D source)
+	{
+		targetTexture.SetPixels32(sourceTexture.GetPixels32());
+		targetTexture.Apply();
+	}
+	
+	private void PaintItBack()
     {
         targetTexture.SetPixels32(sourceTexture.GetPixels32());
 		targetTexture.Apply();
@@ -57,20 +58,6 @@ public class TeamSelection : MonoBehaviour
 
 		targetTexture.SetPixels32(texturePixels);
 		targetTexture.Apply();
-    }
-
-    private void BackToOriginalPixelMatrix(Texture2D texture, Color32[] originalPixelMatrix)
-    {
-        texture.SetPixels32(originalPixelMatrix);
-        /*
-        Color[] texturePixels = texture.GetPixels();
-
-        for (int i = 0; i < texturePixels.Length; i++)
-        {
-            texturePixels[i] = originalPixelMatrix[i];
-        }
-
-        texture.SetPixels(texturePixels);*/
     }
 
     private Color32[] SetOriginalPixelMatrix(Texture2D _texture)
