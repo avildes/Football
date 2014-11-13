@@ -6,8 +6,9 @@ public class TeamSelection : MonoBehaviour
 {
     //public static TeamSelection Instance;
 
-    public Texture2D texture;
+    public Texture2D targetTexture;
 
+	public Texture2D sourceTexture;
     /*void Awake()
     {
         Instance = this;
@@ -38,14 +39,13 @@ public class TeamSelection : MonoBehaviour
 
     private void PaintItBack()
     {
-        texture.SetPixels32(originalPixelMatrix);
-        texture.Apply();
+        targetTexture.SetPixels32(sourceTexture.GetPixels32());
+		targetTexture.Apply();
     }
 
     private void PaintItBlack()
     {
-        originalPixelMatrix = texture.GetPixels32();
-        Color32[] texturePixels = texture.GetPixels32();
+        Color32[] texturePixels = targetTexture.GetPixels32();
 
         for (int i = 0; i < texturePixels.Length; i++)
         {
@@ -55,8 +55,8 @@ public class TeamSelection : MonoBehaviour
             }
         }
 
-        texture.SetPixels32(texturePixels);
-        texture.Apply();
+		targetTexture.SetPixels32(texturePixels);
+		targetTexture.Apply();
     }
 
     private void BackToOriginalPixelMatrix(Texture2D texture, Color32[] originalPixelMatrix)
