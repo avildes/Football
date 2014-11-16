@@ -74,6 +74,9 @@ public class GameController : MonoBehaviour
 
 	private bool resetHiScore;
 
+    public delegate void ClickHandler();
+    public static event ClickHandler onGameOver;
+
     void Start()
     {
         //TeamSelection.Instance.PaintSprite("black");
@@ -397,6 +400,9 @@ public class GameController : MonoBehaviour
 
     void GameOver()
     {
+        //Fires the onGameOver event
+        onGameOver();
+
         SendGameOverToBGController(true);
 
         PlayDieFX();
