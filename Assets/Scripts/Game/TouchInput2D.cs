@@ -13,7 +13,8 @@ public class TouchInput2D : MonoBehaviour {
 
 	private bool canControl = true;
 
-	void Start(){
+	void Start()
+    {
 	}
 
 
@@ -72,7 +73,8 @@ public class TouchInput2D : MonoBehaviour {
 			}
 
 			foreach(GameObject g in touchesOld){
-				if(!touchList.Contains(g)){
+                if (g != null && !touchList.Contains(g))
+                {
 					g.SendMessage("OnTouchExit", hit.point,SendMessageOptions.DontRequireReceiver);
 				}
 			}

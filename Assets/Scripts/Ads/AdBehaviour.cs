@@ -6,7 +6,7 @@ public class AdBehaviour : MonoBehaviour
 {
     private BannerView bannerView;
 
-    private InterstitialAd interstitialView;
+    private InterstitialAd interstitialAd;
 
     private int retryCount;
 
@@ -18,28 +18,34 @@ public class AdBehaviour : MonoBehaviour
     {
         GameController.onGameOver += CheckRetryCount;
 
-        CreateBannerView();
-
         // if this user does not have bought the remove ads add on
         ShowBannerView();
         //else
         //HideBannerView();
     }
 
-    void Destroy()
+    void OnDestroy()
     {
         GameController.onGameOver -= CheckRetryCount;
         bannerView.Destroy();
     }
 
-    private void CheckRetryCount()
+    void CheckRetryCount()
     {
         int count = LoadRetryCount();
 
+		Debug.Log (count);
+
         if(count > 10)
         {
-            SaveRetryCount(0);
+			ShowInterstitialAd();
+			SaveRetryCount(0);
         }
+		else
+		{
+			count += 1;
+			SaveRetryCount(count);
+		}
     }
 
     private static AdRequest CreateAdRequest()
@@ -66,6 +72,7 @@ public class AdBehaviour : MonoBehaviour
 
     private void ShowBannerView()
     {
+		CreateBannerView();
         bannerView.Show();
     }
 
@@ -78,15 +85,16 @@ public class AdBehaviour : MonoBehaviour
     #region InterstitialAd
     private void CreateInterstitialAd()
     {
-        interstitialView = new InterstitialAd(AdUnitIdInsterstitial);
+        interstitialAd = new InterstitialAd(AdUnitIdInsterstitial);
         AdRequest request = CreateAdRequest();
         // Load the banner with the request.
-        interstitialView.LoadAd(request);
+        interstitialAd.LoadAd(request);
     }
 
-    private void ShowInterstitialView()
+    private void ShowInterstitialAd()
     {
-        interstitialView.Show();
+		CreateInterstitialAd();
+        interstitialAd.Show();
     }
     #endregion
 

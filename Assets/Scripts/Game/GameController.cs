@@ -21,6 +21,10 @@ public class GameController : MonoBehaviour
     public GameObject bestObj;
 
     public GameObject retry;
+	
+	public GameObject tutorial;
+	//APAGAR
+	public GameObject retryCount;
 
     public bool gameOver = false;
 
@@ -77,6 +81,8 @@ public class GameController : MonoBehaviour
     public delegate void ClickHandler();
     public static event ClickHandler onGameOver;
 
+	private bool play;
+
     void Start()
     {
         //TeamSelection.Instance.PaintSprite("black");
@@ -100,8 +106,13 @@ public class GameController : MonoBehaviour
 		{
 			SaveBest(0);
 		}
-    }
 
+		StartCoroutine (Init());
+		//APAGAR
+		retryCount.transform.GetChild(0).gameObject.GetComponent<TextMesh>().text = (LoadRetryCount()).ToString();
+
+	}
+	
     void UpdateVariables()
     {
         enemySpeed = BalanceClass.Instance.enemySpeed;
@@ -175,9 +186,34 @@ public class GameController : MonoBehaviour
 		}
 	}
 
+	IEnumerator Init()
+	{
+		bool active = true;
+
+		while(!play)
+		{
+			tutorial.SetActive(active);
+			active = !active;
+			yield return new WaitForSeconds(.5f);
+		}
+
+		tutorial.SetActive(false);
+	}
+
     void Update()
     {
-        if (!gameOver)
+		if(!play)
+		{
+			if(Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.RightArrow) || Input.touches.Length > 0)
+			{
+				play = true;
+				tutorial.SetActive(false);
+				GetTouches();
+				GetKeys();
+			}
+		}
+
+        if (!gameOver && play)
         {
 			tempoTotal += Time.deltaTime;
 			UpdateVariables();
@@ -199,7 +235,7 @@ public class GameController : MonoBehaviour
 	            }
 			}
         }
-        else if ((Input.touchCount == 1 && Input.touches[0].phase.Equals(TouchPhase.Ended)) || Input.GetKeyDown(KeyCode.Space))
+        else if ((gameOver) &&  (Input.touchCount == 1 && Input.touches[0].phase.Equals(TouchPhase.Ended)) || Input.GetKeyDown(KeyCode.Space))
         {
             Application.LoadLevel("game");
         }
@@ -402,8 +438,10 @@ public class GameController : MonoBehaviour
     {
         //Fires the onGameOver event
         onGameOver();
-
-        SendGameOverToBGController(true);
+		//APAGAR
+		retryCount.transform.GetChild(0).gameObject.GetComponent<TextMesh>().text = (LoadRetryCount()).ToString();
+		
+		SendGameOverToBGController(true);
 
         PlayDieFX();
 
@@ -415,6 +453,7 @@ public class GameController : MonoBehaviour
             enemies[i].SetActive(false);
         }
 
+		play = false;
         gameOver = true;
 
 		int sc = (int) score;
@@ -458,9 +497,20 @@ public class GameController : MonoBehaviour
 
         return 0;
     }
-
-    void SetSpeed(float value)
-    {
+	// APAGAR
+	int LoadRetryCount()
+	{
+		if (PlayerPrefs.HasKey("Retry"))
+		{
+			return PlayerPrefs.GetInt("Retry");
+			
+		}
+		
+		return 0;
+	}
+	
+	void SetSpeed(float value)
+	{
         enemySpeed = value;
         GameObject.FindGameObjectWithTag("BackgroundControl").SendMessage("SetSpeed", value, SendMessageOptions.DontRequireReceiver);
     }
