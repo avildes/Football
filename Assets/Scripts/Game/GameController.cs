@@ -4,6 +4,13 @@ using System.Collections.Generic;
 
 public class GameController : MonoBehaviour
 {
+    /// <summary>
+    /// Analytics Variable
+    /// </summary>
+    public GoogleAnalyticsV3 googleAnalytics;
+    /// 
+
+
 	public GameObject touchAudioSource;
 
 	public GameObject encore;
