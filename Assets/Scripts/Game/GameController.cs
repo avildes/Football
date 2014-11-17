@@ -4,13 +4,7 @@ using System.Collections.Generic;
 
 public class GameController : MonoBehaviour
 {
-    /// <summary>
-    /// Analytics Variable
-    /// </summary>
-    public GoogleAnalyticsV3 googleAnalytics;
-    /// 
-
-
+    
 	public GameObject touchAudioSource;
 
 	public GameObject encore;
@@ -94,14 +88,15 @@ public class GameController : MonoBehaviour
     {
         //TeamSelection.Instance.PaintSprite("black");
 
+        AnalyticsManager.Instance.LogScene("Game");
+
         source = GetComponent<AudioSource>();
         source.loop = false;
 
 		touchSource = touchAudioSource.GetComponent<AudioSource>();
 		touchSource.loop = false;
-
-		
-		bestScore = LoadBest();
+        
+        bestScore = LoadBest();
 
         bestObj.GetComponent<TextMesh>().text = bestScore.ToString();
 
@@ -447,7 +442,9 @@ public class GameController : MonoBehaviour
         onGameOver();
 		//APAGAR
 		retryCount.transform.GetChild(0).gameObject.GetComponent<TextMesh>().text = (LoadRetryCount()).ToString();
-		
+
+        AnalyticsManager.Instance.LogScene("Retry");
+
 		SendGameOverToBGController(true);
 
         PlayDieFX();
@@ -467,8 +464,13 @@ public class GameController : MonoBehaviour
 
         if (LoadBest() < sc)
         {
+            AnalyticsManager.Instance.LogHiScore(sc);
             SaveBest(sc);
             bestObj.GetComponent<TextMesh>().text = (sc).ToString();
+        }
+        else
+        {
+            AnalyticsManager.Instance.LogScore(sc);
         }
     }
 
