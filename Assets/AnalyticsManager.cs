@@ -26,12 +26,22 @@ public class AnalyticsManager : MonoBehaviour
         googleAnalytics.LogScreen(sceneName);
     }
 
-    public void LogScore(int score)
-    {
+
+	public void LogSceneTransition(string oldScene, string newScene)
+	{
+		EventHitBuilder eventLog = new EventHitBuilder();
+		eventLog.SetEventCategory("Conversion");
+		eventLog.SetEventAction("Scene Transition");
+		eventLog.SetEventLabel("Transition from: " + oldScene + " to: " + newScene);
+		googleAnalytics.LogEvent(eventLog);
+	}
+
+	public void LogTimeSpent(string eventName, int timeSpent)
+	{
         EventHitBuilder eventLog = new EventHitBuilder();
-        eventLog.SetEventCategory("EndGame");
-        eventLog.SetEventAction("Score");
-        eventLog.SetEventValue(score);
+        eventLog.SetEventCategory(eventName);
+		eventLog.SetEventAction("TimeSpent");
+        eventLog.SetEventValue(timeSpent);
         googleAnalytics.LogEvent(eventLog);
     }
 
@@ -39,7 +49,7 @@ public class AnalyticsManager : MonoBehaviour
     {
         EventHitBuilder eventLog = new EventHitBuilder();
         eventLog.SetEventCategory("EndGame");
-        eventLog.SetEventAction("New HiScore");
+        eventLog.SetEventAction("New Record");
         eventLog.SetEventValue(newScore);
         googleAnalytics.LogEvent(eventLog);
     }

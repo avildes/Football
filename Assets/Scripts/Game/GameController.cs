@@ -239,11 +239,17 @@ public class GameController : MonoBehaviour
         }
         else if ((gameOver) &&  (Input.touchCount == 1 && Input.touches[0].phase.Equals(TouchPhase.Ended)) || Input.GetKeyDown(KeyCode.Space))
         {
+			AnalyticsManager.Instance.LogSceneTransition("Retry", "Game");
             Application.LoadLevel("game");
         }
 		else
 		{
-			if (Input.GetKeyDown(KeyCode.Escape)) { Application.LoadLevel("start"); }
+			if (Input.GetKeyDown(KeyCode.Escape))
+			{
+				AnalyticsManager.Instance.LogSceneTransition("Retry", "Splash");
+
+				Application.LoadLevel("start");
+			}
 		}
     }
 
@@ -438,7 +444,10 @@ public class GameController : MonoBehaviour
 
     void GameOver()
     {
-        //Fires the onGameOver event
+		play = false;
+		gameOver = true;
+        
+		//Fires the onGameOver event
         onGameOver();
 		//APAGAR
 		retryCount.transform.GetChild(0).gameObject.GetComponent<TextMesh>().text = (LoadRetryCount()).ToString();
@@ -452,13 +461,12 @@ public class GameController : MonoBehaviour
         player.SetActive(false);
         retry.SetActive(true);
 
+		AnalyticsManager.Instance.LogTimeSpent("Match Duration", (int) tempoTotal);
+
         for (int i = 0; i < enemies.Count; i++)
         {
             enemies[i].SetActive(false);
         }
-
-		play = false;
-        gameOver = true;
 
 		int sc = (int) score;
 
@@ -467,10 +475,6 @@ public class GameController : MonoBehaviour
             AnalyticsManager.Instance.LogHiScore(sc);
             SaveBest(sc);
             bestObj.GetComponent<TextMesh>().text = (sc).ToString();
-        }
-        else
-        {
-            AnalyticsManager.Instance.LogScore(sc);
         }
     }
 

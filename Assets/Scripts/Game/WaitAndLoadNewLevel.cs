@@ -17,4 +17,9 @@ public class WaitAndLoadNewLevel : MonoBehaviour
 	{
 		StartCoroutine(WaitAndLoad());
 	}
+
+	void OnMouseDown()
+	{	
+		Application.LoadLevel(level);
+	}
 }

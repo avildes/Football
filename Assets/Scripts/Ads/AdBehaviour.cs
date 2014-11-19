@@ -12,11 +12,14 @@ public class AdBehaviour : MonoBehaviour
 
     private string AdUnitIdBanner = "ca-app-pub-8586182765170580/3412185355";
     private string AdUnitIdInsterstitial = "ca-app-pub-8586182765170580/4888918555";
-    private static string testDeviceId = "3B92BFA48FBC7A95";
+    private static string testDeviceId = "3DA3C2567BFA84A4";
 
     void Start()
     {
         GameController.onGameOver += CheckRetryCount;
+
+		CreateInterstitialAd();
+		CreateBannerView();
 
         // if this user does not have bought the remove ads add on
         ShowBannerView();
@@ -72,7 +75,6 @@ public class AdBehaviour : MonoBehaviour
 
     private void ShowBannerView()
     {
-		CreateBannerView();
         bannerView.Show();
     }
 
@@ -93,8 +95,8 @@ public class AdBehaviour : MonoBehaviour
 
     private void ShowInterstitialAd()
     {
-		CreateInterstitialAd();
-        interstitialAd.Show();
+		if (interstitialAd.IsLoaded ())
+			interstitialAd.Show();
     }
     #endregion
 

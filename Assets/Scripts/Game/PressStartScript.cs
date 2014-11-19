@@ -2,20 +2,41 @@
 using System.Collections;
 using GoogleMobileAds.Api;
 
-public class PressStartScript : MonoBehaviour {
+public class PressStartScript : MonoBehaviour
+{
+	public float timer;
 
 	void Start ()
     {
+		timer = 0;
+
+		AnalyticsManager.Instance.LogScene("Splash");
         StartCoroutine(Flash());
 	}
 	
 	void Update ()
     {
+		timer += Time.deltaTime;
+
 	    if(Input.touchCount == 1 || Input.GetKeyDown(KeyCode.Space))
         {
+			SaveTimer();
+			AnalyticsManager.Instance.LogSceneTransition("Splash", "Game");
             Application.LoadLevel("game");
         }
-		if (Input.GetKeyDown(KeyCode.Escape)) { Application.Quit(); }
+
+		if (Input.GetKeyDown(KeyCode.Escape))
+		{
+			SaveTimer();
+			AnalyticsManager.Instance.LogSceneTransition("Splash", "Quit");
+			Application.Quit();
+		}
+	}
+
+	void SaveTimer()
+	{
+		AnalyticsManager.Instance.LogTimeSpent("Time Spent on Splash Screen", (int) timer);
+
 	}
 
     IEnumerator Flash()
