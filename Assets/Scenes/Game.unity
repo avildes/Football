@@ -535,6 +535,7 @@ Animator:
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
   m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!212 &940177633
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -599,7 +600,7 @@ AudioSource:
   m_Pitch: 1
   Loop: 0
   Mute: 0
-  Priority: 128
+  Priority: 160
   DopplerLevel: 1
   MinDistance: 1
   MaxDistance: 500
@@ -859,10 +860,10 @@ AudioSource:
   m_GameObject: {fileID: 1144370993}
   m_Enabled: 1
   serializedVersion: 3
-  m_audioClip: {fileID: 8300000, guid: 57587ee88d7c94647ad6dcec13d2d24f, type: 3}
+  m_audioClip: {fileID: 8300000, guid: a3e4c2a59fc43442396198acc763bbdb, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: .150000006
-  m_Pitch: 1.09000003
+  m_Volume: .239999995
+  m_Pitch: 1
   Loop: 1
   Mute: 0
   Priority: 128
@@ -1577,6 +1578,7 @@ Animator:
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
   m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!212 &1675091671
 SpriteRenderer:
   m_ObjectHideFlags: 0
