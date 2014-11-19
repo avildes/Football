@@ -75,6 +75,7 @@ public class BackgroundControl : MonoBehaviour
     void SetGameOver(bool value)
     {
         gameOver = value;
+		if (value) GetComponent<AudioSource>().Stop();
     }
 
     void SetSpeed(float value)
