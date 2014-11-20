@@ -860,7 +860,7 @@ AudioSource:
   m_GameObject: {fileID: 1144370993}
   m_Enabled: 1
   serializedVersion: 3
-  m_audioClip: {fileID: 8300000, guid: a3e4c2a59fc43442396198acc763bbdb, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 23043de15b82d48c6ad0f7e7826f43ea, type: 3}
   m_PlayOnAwake: 1
   m_Volume: .239999995
   m_Pitch: 1
@@ -1508,7 +1508,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 8200000, guid: 62ccaa2f9dd3bcd40b2d276267468bdb, type: 2}
       propertyPath: m_Volume
-      value: .200000003
+      value: .180000007
       objectReference: {fileID: 0}
     - target: {fileID: 8200000, guid: 62ccaa2f9dd3bcd40b2d276267468bdb, type: 2}
       propertyPath: BypassEffects
@@ -1798,7 +1798,7 @@ AudioSource:
   serializedVersion: 3
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: .200000003
+  m_Volume: .180000007
   m_Pitch: 1
   Loop: 0
   Mute: 0
