@@ -18,7 +18,7 @@ public class AnalyticsManager : MonoBehaviour
 
 	void Start ()
     {
-		if(Instance == null) Instance = this;   
+		if(Instance == null) Instance = this;
 	}
 
     public void LogScene(string sceneName)

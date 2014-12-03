@@ -11,7 +11,11 @@ public class GameController : MonoBehaviour
 	
     public GameObject player;
 
+	/// <summary>
+	/// The Active enemies.
+	/// </summary>
     public List<GameObject> enemies;
+	public List<GameObject> notActiveEnemies;
 
     public GameObject enemyPrefab;
 
@@ -84,9 +88,24 @@ public class GameController : MonoBehaviour
 
 	private bool play;
 
-    void Start()
+	void Start()
+	{
+		StartGame();
+	}
+
+    void StartGame()
     {
         //TeamSelection.Instance.PaintSprite("black");
+		tempoTotal = 0;
+		score = 0;
+		scoreObj.GetComponent<TextMesh>().text = (int)score + "";
+
+		gameOver = false;
+		play = false;
+
+		SendGameOverToBGController(false);
+		player.SetActive(true);
+		retry.SetActive(false);
 
         AnalyticsManager.Instance.LogScene("Game");
 
@@ -240,7 +259,8 @@ public class GameController : MonoBehaviour
         else if ((gameOver) &&  (Input.touchCount == 1 && Input.touches[0].phase.Equals(TouchPhase.Ended)) || Input.GetKeyDown(KeyCode.Space))
         {
 			AnalyticsManager.Instance.LogSceneTransition("Retry", "Game");
-            Application.LoadLevel("game");
+            //Application.LoadLevel("game");
+			StartGame ();
         }
 		else
 		{
@@ -256,6 +276,9 @@ public class GameController : MonoBehaviour
 	void UpdateScore()
 	{
 		score += (scoreIncrement * enemySpeed);
+
+		//System.StringBuilder str = new StringBuilder("");
+
 		scoreObj.GetComponent<TextMesh>().text = (int)score + "";
 
 		if(score > scoreCheck)
@@ -351,7 +374,10 @@ public class GameController : MonoBehaviour
 
             if (enemies[i].transform.position.y < enemyDestroyYPosition)
             {
-                Destroy(enemies[i]);
+				//Destroy and instantiate can cause a big memory usage
+                //Destroy(enemies[i]);
+				enemies[i].SetActive(false);
+				notActiveEnemies.Add(enemies[i]);
                 enemies.RemoveAt(i);
                 i--;
             }
@@ -367,12 +393,12 @@ public class GameController : MonoBehaviour
 				}
 
 				pos = playerPos.y + enemyLookDistance;
-
+				/*
 				if ((enemyPos.y < pos) && (playerPos.x != enemyPos.x))
 				{
 					enemies[i].GetComponent<Animator>().SetInteger("Look", (int)playerPos.x);
 				}
-
+				*/
 				if (enemyPos.y < playerPos.y)
                 {
                     enemies[i].GetComponent<SpriteRenderer>().sortingOrder = 5;
@@ -390,10 +416,24 @@ public class GameController : MonoBehaviour
                 float x = UnityEngine.Random.value;
 
                 x = (x < .5f) ? -1 : 1;
+				if((enemies.Count + notActiveEnemies.Count) < 7)
+				{
+                	GameObject enemy = Instantiate(enemyPrefab, new Vector3(x, enemySpawnYPosition, 0), Quaternion.identity) as GameObject;
 
-                GameObject enemy = Instantiate(enemyPrefab, new Vector3(x, enemySpawnYPosition, 0), Quaternion.identity) as GameObject;
+                	enemies.Add(enemy);
+				}
+				else
+				{
+					if (notActiveEnemies.Count <= 0) Debug.Log("NotActiveEnemies.Count <= 0"); 
+					GameObject enemy = notActiveEnemies[0];
+					notActiveEnemies.RemoveAt(0);
 
-                enemies.Add(enemy);
+					enemy.SetActive(true);
+					Vector3 enemyPosition = new Vector3(x, enemySpawnYPosition, 0);
+					enemy.transform.position = enemyPosition;
+
+					enemies.Add(enemy);
+				}
             }
 
             SetSpawnChanceAtTime(intervalosDeIncrementoProbabilidadeSpawn, incrementosProbabilidadeSpawn);
@@ -454,10 +494,9 @@ public class GameController : MonoBehaviour
 
         AnalyticsManager.Instance.LogScene("Retry");
 
-		SendGameOverToBGController(true);
-
         PlayDieFX();
 
+		SendGameOverToBGController(true);
         player.SetActive(false);
         retry.SetActive(true);
 
@@ -465,7 +504,10 @@ public class GameController : MonoBehaviour
 
         for (int i = 0; i < enemies.Count; i++)
         {
-            enemies[i].SetActive(false);
+			enemies[i].SetActive(false);
+			notActiveEnemies.Add(enemies[i]);
+			enemies.RemoveAt(i);
+			i--;
         }
 
 		int sc = (int) score;
@@ -515,10 +557,8 @@ public class GameController : MonoBehaviour
 	{
 		if (PlayerPrefs.HasKey("Retry"))
 		{
-			return PlayerPrefs.GetInt("Retry");
-			
+			return PlayerPrefs.GetInt("Retry");	
 		}
-		
 		return 0;
 	}
 	

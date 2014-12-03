@@ -317,7 +317,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   level: Splash
-  seconds: 6
+  seconds: 3
 --- !u!61 &1871727868
 BoxCollider2D:
   m_ObjectHideFlags: 0

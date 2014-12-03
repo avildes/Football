@@ -14,16 +14,28 @@ public class AdBehaviour : MonoBehaviour
     private string AdUnitIdInsterstitial = "ca-app-pub-8586182765170580/4888918555";
     private static string testDeviceId = "3DA3C2567BFA84A4";
 
-    void Start()
-    {
-        GameController.onGameOver += CheckRetryCount;
+	public static AdBehaviour Instance;
 
-		CreateInterstitialAd();
-		CreateBannerView();
-
+	void Awake()
+	{
+		Instance = this;
+		DontDestroyOnLoad(this);
+	}
+	
+	void Start ()
+	{
+		if(Instance == null)
+		{
+			Instance = this;   
+		}
+		
+		GameController.onGameOver += CheckRetryCount;
+		
+		if(interstitialAd == null) CreateInterstitialAd();
+		if(bannerView == null) CreateBannerView();
         // if this user does not have bought the remove ads add on
-        ShowBannerView();
         //else
+		ShowBannerView();
         //HideBannerView();
     }
 
