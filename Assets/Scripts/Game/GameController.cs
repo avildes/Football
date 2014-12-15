@@ -4,7 +4,6 @@ using System.Collections.Generic;
 
 public class GameController : MonoBehaviour
 {
-    
 	public GameObject touchAudioSource;
 
 	public GameObject encore;
@@ -87,6 +86,47 @@ public class GameController : MonoBehaviour
     public static event ClickHandler onGameOver;
 
 	private bool play;
+
+	private GameState gameState;
+
+	private enum GameState
+	{
+		TUTORIAL,
+		GAME,
+		GAMEOVER
+	}
+
+	void OnMouseDown()
+	{
+		if (gameState == GameState.TUTORIAL)
+		{
+			tutorial.SetActive(false);
+			gameState = GameState.GAME;
+		}
+
+		if (gameState == GameState.GAME)
+		{
+			if ((Input.touchCount == 1) && (Input.touches[0].phase.Equals(TouchPhase.Ended)))
+			{
+				var touch = Input.touches[0];
+				if (touch.position.x < Screen.width / 2)
+				{
+					MovePlayer(-1);
+				}
+				else if (touch.position.x > Screen.width / 2)
+				{
+					MovePlayer(1);
+				}
+			}
+		}
+
+		if (gameState == GameState.GAMEOVER)
+		{
+			AnalyticsManager.Instance.LogSceneTransition("Retry", "Game");
+			gameState = GameState.TUTORIAL;
+			StartGame ();
+		}
+	}
 
 	void Start()
 	{
@@ -171,34 +211,6 @@ public class GameController : MonoBehaviour
 		resetHiScore = BalanceClass.Instance.resetHiScore;
     }
 
-    void GetTouches()
-    {
-        if ((Input.touchCount == 1) && (Input.touches[0].phase.Equals(TouchPhase.Ended)))
-        {
-            var touch = Input.touches[0];
-            if (touch.position.x < Screen.width / 2)
-            {
-                MovePlayer(-1);
-            }
-            else if (touch.position.x > Screen.width / 2)
-            {
-                MovePlayer(1);
-            }
-        }
-    }
-
-    void GetKeys()
-    {
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
-        {
-            MovePlayer(-1);
-        }
-        else if (Input.GetKeyDown(KeyCode.RightArrow))
-        {
-            MovePlayer(1);
-        }
-    }
-
 	void FixedUpdate()
 	{
 		if(!gameOver)
@@ -211,7 +223,7 @@ public class GameController : MonoBehaviour
 	{
 		bool active = true;
 
-		while(!play)
+		while(gameState == GameState.TUTORIAL)
 		{
 			tutorial.SetActive(active);
 			active = !active;
@@ -223,18 +235,7 @@ public class GameController : MonoBehaviour
 
     void Update()
     {
-		if(!play)
-		{
-			if(Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.RightArrow) || Input.touches.Length > 0)
-			{
-				play = true;
-				tutorial.SetActive(false);
-				GetTouches();
-				GetKeys();
-			}
-		}
-
-        if (!gameOver && play)
+        if (gameState == GameState.GAME)
         {
 			tempoTotal += Time.deltaTime;
 			UpdateVariables();
@@ -242,9 +243,6 @@ public class GameController : MonoBehaviour
 			SetDistanceAtTime(intervalosDistanciaEntreSpawns, distanciasEntreSpawns);
 
 			UpdateScore();
-
-            GetTouches();
-            GetKeys();
 
             InstantiateEnemies();
 
@@ -255,12 +253,6 @@ public class GameController : MonoBehaviour
 	               GameOver();
 	            }
 			}
-        }
-        else if ((gameOver) &&  (Input.touchCount == 1 && Input.touches[0].phase.Equals(TouchPhase.Ended)) || Input.GetKeyDown(KeyCode.Space))
-        {
-			AnalyticsManager.Instance.LogSceneTransition("Retry", "Game");
-            //Application.LoadLevel("game");
-			StartGame ();
         }
 		else
 		{
@@ -484,6 +476,8 @@ public class GameController : MonoBehaviour
 
     void GameOver()
     {
+		gameState = GameState.GAMEOVER;
+
 		play = false;
 		gameOver = true;
         
