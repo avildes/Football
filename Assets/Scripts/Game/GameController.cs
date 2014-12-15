@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System;
 
 public class GameController : MonoBehaviour
 {
@@ -89,43 +90,14 @@ public class GameController : MonoBehaviour
 
     private GameState gameState;
 
+    private int speedIndex;
+    private int distanceIndex;
+
     private enum GameState
     {
         TUTORIAL,
         GAME,
         GAMEOVER
-    }
-
-    void HandleInput()
-    {
-        if ((Input.touchCount == 1) && (Input.touches[0].phase.Equals(TouchPhase.Ended)))
-        {
-            if (gameState == GameState.TUTORIAL)
-            {
-                tutorial.SetActive(false);
-                gameState = GameState.GAME;
-            }
-
-            if (gameState == GameState.GAME)
-            {
-                var touch = Input.touches[0];
-                if (touch.position.x < Screen.width / 2)
-                {
-                    MovePlayer(-1);
-                }
-                else if (touch.position.x > Screen.width / 2)
-                {
-                    MovePlayer(1);
-                }
-            }
-
-            if (gameState == GameState.GAMEOVER)
-            {
-                AnalyticsManager.Instance.LogSceneTransition("Retry", "Game");
-                gameState = GameState.TUTORIAL;
-                StartGame();
-            }
-        }
     }
 
     void Start()
@@ -135,13 +107,9 @@ public class GameController : MonoBehaviour
 
     void StartGame()
     {
-        //TeamSelection.Instance.PaintSprite("black");
         tempoTotal = 0;
         score = 0;
         scoreObj.GetComponent<TextMesh>().text = (int)score + "";
-
-        gameOver = false;
-        play = false;
 
         SendGameOverToBGController(false);
         player.SetActive(true);
@@ -172,6 +140,12 @@ public class GameController : MonoBehaviour
         //APAGAR
         retryCount.transform.GetChild(0).gameObject.GetComponent<TextMesh>().text = (LoadRetryCount()).ToString();
 
+        //speedIndex = 0;
+        //distanceIndex = 0;
+
+        SetSpeed(8);
+        SetSpawnDistance(4);
+        //
     }
 
     void UpdateVariables()
@@ -233,27 +207,71 @@ public class GameController : MonoBehaviour
         tutorial.SetActive(false);
     }
 
-    IEnumerator UpdateBalance()
+    void UpdateBalance()
     {
-        SetSpeedAtTime(intervalosDeIncrementoDeVelocidade, incrementosDeVelocidade);
-        SetDistanceAtTime(intervalosDistanciaEntreSpawns, distanciasEntreSpawns);
+        //SetValue(SetSpeed, intervalosDeIncrementoDeVelocidade, incrementosDeVelocidade, ref speedIndex);
+        //SetValueAtTime(SetSpeed, intervalosDeIncrementoDeVelocidade, incrementosDeVelocidade);
+        //SetValue(SetSpawnDistance, intervalosDistanciaEntreSpawns, distanciasEntreSpawns, ref distanceIndex);
 
-        yield return new WaitForSeconds(1);
+        //yield return new WaitForSeconds(1);
 
-        StartCoroutine(UpdateBalance());
+        //StartCoroutine(UpdateBalance());
+    }
+
+    void HandleInput()
+    {
+        //delete
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            if (gameState == GameState.TUTORIAL)
+            {
+                tutorial.SetActive(false);
+                gameState = GameState.GAME;
+            }
+        }
+        ///dd
+
+
+        if ((Input.touchCount == 1) && (Input.touches[0].phase.Equals(TouchPhase.Ended)))
+        {
+            if (gameState == GameState.TUTORIAL)
+            {
+                tutorial.SetActive(false);
+                gameState = GameState.GAME;
+            }
+
+            if (gameState == GameState.GAME)
+            {
+                var touch = Input.touches[0];
+                if (touch.position.x < Screen.width / 2)
+                {
+                    MovePlayer(-1);
+                }
+                else if (touch.position.x > Screen.width / 2)
+                {
+                    MovePlayer(1);
+                }
+            }
+
+            if (gameState == GameState.GAMEOVER)
+            {
+                AnalyticsManager.Instance.LogSceneTransition("Retry", "Game");
+                gameState = GameState.TUTORIAL;
+                StartGame();
+            }
+        }
     }
 
     void Update()
     {
         HandleInput();
 
+
         if (gameState == GameState.GAME)
         {
             tempoTotal += Time.deltaTime;
-            //UpdateVariables();
-            
-            StartCoroutine(UpdateBalance());
 
+            UpdateBalance();
             UpdateScore();
 
             InstantiateEnemies();
@@ -281,13 +299,10 @@ public class GameController : MonoBehaviour
     {
         score += (scoreIncrement * enemySpeed);
 
-        //System.StringBuilder str = new StringBuilder("");
-
         scoreObj.GetComponent<TextMesh>().text = (int)score + "";
 
         if (score > scoreCheck)
         {
-            //Debug.Log("Checkpoint");
             PlayEncoreSound(checkpointClip);
 
             scoreCheck += scoreCheckpoint;
@@ -319,20 +334,6 @@ public class GameController : MonoBehaviour
     {
         PlayTouchFX();
 
-        /*
-        Vector3 size = timerObj.transform.localScale;
-        size.x += (1 / increment) * 400;
-        if (size.x < 25) size.x = 25;
-        timerObj.transform.localScale = size;
-
-        if (timerObj.transform.localScale.x > 200)
-        {
-            size = timerObj.transform.localScale;
-            size.x = 200;
-            timerObj.transform.localScale = size;
-        }
-        */
-
         if (side == -1) // left
         {
             player.transform.position = new Vector3(-1, -4, 0);
@@ -341,13 +342,6 @@ public class GameController : MonoBehaviour
         {
             player.transform.position = new Vector3(1, -4, 0);
         }
-        /*
-        MoveEnemy();
-
-        if (Collides())
-        {
-            GameOver();
-        }*/
     }
 
 
@@ -418,8 +412,8 @@ public class GameController : MonoBehaviour
             if (create)
             {
                 float x = UnityEngine.Random.value;
-
                 x = (x < .5f) ? -1 : 1;
+
                 if ((enemies.Count + notActiveEnemies.Count) < 7)
                 {
                     GameObject enemy = Instantiate(enemyPrefab, new Vector3(x, enemySpawnYPosition, 0), Quaternion.identity) as GameObject;
@@ -440,7 +434,7 @@ public class GameController : MonoBehaviour
                 }
             }
 
-            SetSpawnChanceAtTime(intervalosDeIncrementoProbabilidadeSpawn, incrementosProbabilidadeSpawn);
+            SetValueAtTime(SetCreate, intervalosDeIncrementoProbabilidadeSpawn, incrementosProbabilidadeSpawn);
         }
     }
 
@@ -450,37 +444,24 @@ public class GameController : MonoBehaviour
         create = (b > chance) ? false : true;
     }
 
-    void SetSpawnChanceAtTime(List<float> times, List<float> values)
+    void SetValue(Action<float> methodName, List<float> times, List<float> values, ref int index)
     {
-        for (int i = times.Count - 1; i > -1; i--)
+        if (tempoTotal > times[index])
         {
-            if (tempoTotal > times[i])
-            {
-                SetCreate(values[i]);
-                return;
-            }
+            methodName(values[index]);
+            if (times.Count == index + 1) return;
+            else index++;
+            return;
         }
     }
 
-    void SetSpeedAtTime(List<float> times, List<float> values)
+    void SetValueAtTime(Action<float> methodName, List<float> times, List<float> values)
     {
         for (int i = times.Count - 1; i > -1; i--)
         {
             if (tempoTotal > times[i])
             {
-                SetSpeed(values[i]);
-                return;
-            }
-        }
-    }
-
-    void SetDistanceAtTime(List<float> times, List<float> values)
-    {
-        for (int i = times.Count - 1; i > -1; i--)
-        {
-            if (tempoTotal > times[i])
-            {
-                SetSpawnDistance(values[i]);
+                methodName(values[i]);
                 return;
             }
         }

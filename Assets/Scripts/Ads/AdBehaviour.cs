@@ -49,7 +49,7 @@ public class AdBehaviour : MonoBehaviour
     {
         int count = LoadRetryCount();
 
-		Debug.Log (count);
+		//Debug.Log (count);
 
         if(count > 10)
         {

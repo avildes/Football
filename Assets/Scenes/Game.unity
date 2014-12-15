@@ -1423,7 +1423,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: 62ccaa2f9dd3bcd40b2d276267468bdb, type: 2}
       propertyPath: bgSpeed
-      value: 5
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: 62ccaa2f9dd3bcd40b2d276267468bdb, type: 2}
       propertyPath: intervalosDeIncrementoDeVelocidade.Array.data[5]
@@ -1863,7 +1863,7 @@ MonoBehaviour:
   enemyDestroyYPosition: -6
   enemySpeed: 5
   enemyVerticalDirection: -1
-  bgSpeed: 5
+  bgSpeed: 8
   bgVerticalDirection: -1
   intervalosDeIncrementoDeVelocidade:
   - 0
