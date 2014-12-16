@@ -140,11 +140,11 @@ public class GameController : MonoBehaviour
         //APAGAR
         retryCount.transform.GetChild(0).gameObject.GetComponent<TextMesh>().text = (LoadRetryCount()).ToString();
 
-        //speedIndex = 0;
-        //distanceIndex = 0;
+        speedIndex = 0;
+        distanceIndex = 0;
 
-        SetSpeed(8);
-        SetSpawnDistance(4);
+        //SetSpeed(8);
+        //SetSpawnDistance(4);
         //
     }
 
@@ -209,9 +209,9 @@ public class GameController : MonoBehaviour
 
     void UpdateBalance()
     {
-        //SetValue(SetSpeed, intervalosDeIncrementoDeVelocidade, incrementosDeVelocidade, ref speedIndex);
+        SetValue(SetSpeed, intervalosDeIncrementoDeVelocidade, incrementosDeVelocidade, ref speedIndex);
         //SetValueAtTime(SetSpeed, intervalosDeIncrementoDeVelocidade, incrementosDeVelocidade);
-        //SetValue(SetSpawnDistance, intervalosDistanciaEntreSpawns, distanciasEntreSpawns, ref distanceIndex);
+        SetValue(SetSpawnDistance, intervalosDistanciaEntreSpawns, distanciasEntreSpawns, ref distanceIndex);
 
         //yield return new WaitForSeconds(1);
 
