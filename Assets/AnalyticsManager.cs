@@ -26,7 +26,6 @@ public class AnalyticsManager : MonoBehaviour
         googleAnalytics.LogScreen(sceneName);
     }
 
-
 	public void LogSceneTransition(string oldScene, string newScene)
 	{
 		EventHitBuilder eventLog = new EventHitBuilder();

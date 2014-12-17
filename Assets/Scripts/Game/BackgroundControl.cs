@@ -15,11 +15,9 @@ public class BackgroundControl : MonoBehaviour
 
     public bool gameOver = false;
 
-    void Update()
-    {
-        speed = BalanceClass.Instance.bgSpeed;
-        verticalDirection = BalanceClass.Instance.bgVerticalDirection;
-    }
+    private float mainSpeed = -0.1400581f;
+
+    //TODO Registrar o evento onGameOver e criar o evento onGameStart
 
 	void Start ()
 	{
@@ -34,6 +32,12 @@ public class BackgroundControl : MonoBehaviour
         first = imgs[0];
         last = imgs[lastPosition];
 	}
+
+    void Update()
+    {
+        speed = BalanceClass.Instance.bgSpeed;
+        verticalDirection = BalanceClass.Instance.bgVerticalDirection;
+    }
 
 	void FixedUpdate ()
 	{
@@ -63,7 +67,8 @@ public class BackgroundControl : MonoBehaviour
 
 	void MoveChildren()
 	{
-		transform.Translate(new Vector3(0, speed * verticalDirection * Time.deltaTime, 0));
+		//transform.Translate(new Vector3(0, speed * verticalDirection * Time.deltaTime, 0));
+        transform.Translate(new Vector3(0, mainSpeed, 0));
 		/*
 		for (int i = 0; i < transform.childCount; i++) 
 		{
@@ -81,6 +86,8 @@ public class BackgroundControl : MonoBehaviour
 
     void SetSpeed(float value)
     {
-        speed = value;
+        mainSpeed = value;
+        //speed = value;
+        //Debug.Log("BG Speed set at: " + value);
     }
 }

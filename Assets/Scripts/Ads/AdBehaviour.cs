@@ -29,7 +29,7 @@ public class AdBehaviour : MonoBehaviour
 			Instance = this;   
 		}
 		
-		GameController.onGameOver += CheckRetryCount;
+		GameController.onGameOver += ActivateBanner;
 		
 		if(interstitialAd == null) CreateInterstitialAd();
 		if(bannerView == null) CreateBannerView();
@@ -41,11 +41,11 @@ public class AdBehaviour : MonoBehaviour
 
     void OnDestroy()
     {
-        GameController.onGameOver -= CheckRetryCount;
+        GameController.onGameOver -= ActivateBanner;
         bannerView.Destroy();
     }
 
-    void CheckRetryCount()
+    void ActivateBanner()
     {
         int count = LoadRetryCount();
 
@@ -79,7 +79,7 @@ public class AdBehaviour : MonoBehaviour
     #region BannerView
     private void CreateBannerView()
     {
-        bannerView = new BannerView(AdUnitIdBanner, AdSize.Banner, AdPosition.Top);
+        bannerView = new BannerView(AdUnitIdBanner, AdSize.SmartBanner, AdPosition.Bottom);
         AdRequest request = CreateAdRequest();
         // Load the banner with the request.
         bannerView.LoadAd(request);

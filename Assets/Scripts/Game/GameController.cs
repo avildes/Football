@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 using System;
@@ -23,9 +24,12 @@ public class GameController : MonoBehaviour
 
     public GameObject timerObj;
 
-    public GameObject bestObj;
+    public GameObject finalScoreObj;
+    public GameObject recordObj;
 
     public GameObject retry;
+
+    public GameObject hud;
 
     public GameObject tutorial;
     //APAGAR
@@ -93,6 +97,8 @@ public class GameController : MonoBehaviour
     private int speedIndex;
     private int distanceIndex;
 
+    private float mainSpeed;
+
     private enum GameState
     {
         TUTORIAL,
@@ -109,10 +115,11 @@ public class GameController : MonoBehaviour
     {
         tempoTotal = 0;
         score = 0;
-        scoreObj.GetComponent<TextMesh>().text = (int)score + "";
+        scoreObj.GetComponent<Text>().text = (int)score + "";
 
         SendGameOverToBGController(false);
         player.SetActive(true);
+        hud.SetActive(true);
         retry.SetActive(false);
 
         AnalyticsManager.Instance.LogScene("Game");
@@ -125,7 +132,7 @@ public class GameController : MonoBehaviour
 
         bestScore = LoadBest();
 
-        bestObj.GetComponent<TextMesh>().text = bestScore.ToString();
+        //bestObj.GetComponent<Text>().text = bestScore.ToString();
 
         UpdateVariables();
 
@@ -146,6 +153,18 @@ public class GameController : MonoBehaviour
         //SetSpeed(8);
         //SetSpawnDistance(4);
         //
+    }
+
+    IEnumerator Init()
+    {
+        while(gameState == GameState.TUTORIAL)
+        {
+            tutorial.SetActive(true);
+
+            yield return new WaitForSeconds(.5f);
+        }
+
+        tutorial.SetActive(false);
     }
 
     void UpdateVariables()
@@ -193,20 +212,6 @@ public class GameController : MonoBehaviour
         }
     }
 
-    IEnumerator Init()
-    {
-        bool active = true;
-
-        while (gameState == GameState.TUTORIAL)
-        {
-            tutorial.SetActive(active);
-            active = !active;
-            yield return new WaitForSeconds(.5f);
-        }
-
-        tutorial.SetActive(false);
-    }
-
     void UpdateBalance()
     {
         SetValue(SetSpeed, intervalosDeIncrementoDeVelocidade, incrementosDeVelocidade, ref speedIndex);
@@ -229,6 +234,28 @@ public class GameController : MonoBehaviour
                 gameState = GameState.GAME;
             }
         }
+
+        if (gameState == GameState.GAME)
+        {
+            if (Input.GetKeyDown(KeyCode.LeftArrow))
+            {
+                MovePlayer(-1);
+            }
+            else if (Input.GetKeyDown(KeyCode.RightArrow))
+            {
+                MovePlayer(1);
+            }
+        }
+        /*
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            if (gameState == GameState.GAMEOVER)
+            {
+                AnalyticsManager.Instance.LogSceneTransition("Retry", "Game");
+                gameState = GameState.TUTORIAL;
+                StartGame();
+            }
+        }*/
         ///dd
 
 
@@ -251,13 +278,30 @@ public class GameController : MonoBehaviour
                 {
                     MovePlayer(1);
                 }
-            }
+            }   
+        }
+    }
 
-            if (gameState == GameState.GAMEOVER)
+    public void Retry()
+    {
+        if (gameState == GameState.GAMEOVER)
+        {
+            AnalyticsManager.Instance.LogSceneTransition("Retry", "Game");
+            gameState = GameState.TUTORIAL;
+            StartGame();
+        }
+    }
+
+    void OnGUI()
+    {
+        if (gameState == GameState.GAME)
+        {
+            if (enableCollision)
             {
-                AnalyticsManager.Instance.LogSceneTransition("Retry", "Game");
-                gameState = GameState.TUTORIAL;
-                StartGame();
+                if (Collides())
+                {
+                    GameOver();
+                }
             }
         }
     }
@@ -265,7 +309,6 @@ public class GameController : MonoBehaviour
     void Update()
     {
         HandleInput();
-
 
         if (gameState == GameState.GAME)
         {
@@ -275,14 +318,6 @@ public class GameController : MonoBehaviour
             UpdateScore();
 
             InstantiateEnemies();
-
-            if (enableCollision)
-            {
-                if (Collides())
-                {
-                    GameOver();
-                }
-            }
         }
         else
         {
@@ -299,7 +334,7 @@ public class GameController : MonoBehaviour
     {
         score += (scoreIncrement * enemySpeed);
 
-        scoreObj.GetComponent<TextMesh>().text = (int)score + "";
+        scoreObj.GetComponent<Text>().text = (int)score + "";
 
         if (score > scoreCheck)
         {
@@ -307,7 +342,7 @@ public class GameController : MonoBehaviour
 
             scoreCheck += scoreCheckpoint;
         }
-
+        /*
         if (score > bestScore)
         {
             if (!beatenHiScore)
@@ -316,8 +351,9 @@ public class GameController : MonoBehaviour
                 beatenHiScore = true;
             }
 
-            bestObj.GetComponent<TextMesh>().text = ((int)score).ToString();
+            bestObj.GetComponent<Text>().text = ((int)score).ToString();
         }
+        */
     }
 
     bool CanCreate()
@@ -368,7 +404,8 @@ public class GameController : MonoBehaviour
 
         for (int i = 0; i < enemies.Count; i++)
         {
-            enemies[i].transform.Translate(new Vector3(0, enemySpeed * verticalDirection * Time.deltaTime, 0));
+            //enemies[i].transform.Translate(new Vector3(0, enemySpeed * verticalDirection * Time.deltaTime, 0));
+            enemies[i].transform.Translate(new Vector3(0, mainSpeed, 0));
 
             if (enemies[i].transform.position.y < enemyDestroyYPosition)
             {
@@ -471,13 +508,13 @@ public class GameController : MonoBehaviour
     {
         gameState = GameState.GAMEOVER;
 
-        play = false;
-        gameOver = true;
+        //play = false;
+        //gameOver = true;
 
         //Fires the onGameOver event
         onGameOver();
         //APAGAR
-        retryCount.transform.GetChild(0).gameObject.GetComponent<TextMesh>().text = (LoadRetryCount()).ToString();
+        //retryCount.transform.GetChild(0).gameObject.GetComponent<TextMesh>().text = (LoadRetryCount()).ToString();
 
         AnalyticsManager.Instance.LogScene("Retry");
 
@@ -485,6 +522,7 @@ public class GameController : MonoBehaviour
 
         SendGameOverToBGController(true);
         player.SetActive(false);
+        hud.SetActive(false);
         retry.SetActive(true);
 
         AnalyticsManager.Instance.LogTimeSpent("Match Duration", (int)tempoTotal);
@@ -498,13 +536,21 @@ public class GameController : MonoBehaviour
         }
 
         int sc = (int)score;
-
+        int best;
         if (LoadBest() < sc)
         {
             AnalyticsManager.Instance.LogHiScore(sc);
             SaveBest(sc);
-            bestObj.GetComponent<TextMesh>().text = (sc).ToString();
+            best = sc;
         }
+        else
+        {
+            best = LoadBest();
+        }
+
+        finalScoreObj.GetComponent<Text>().text = sc.ToString();
+
+        recordObj.GetComponent<Text>().text = best.ToString();
     }
 
     void SendGameOverToBGController(bool value)
@@ -551,8 +597,16 @@ public class GameController : MonoBehaviour
 
     void SetSpeed(float value)
     {
-        enemySpeed = value;
-        GameObject.FindGameObjectWithTag("BackgroundControl").SendMessage("SetSpeed", value, SendMessageOptions.DontRequireReceiver);
+        float time = Time.deltaTime;
+        time = time < 0.01f ? 0.015f : time;
+        time = time > 0.03f ? 0.015f : time;
+
+        mainSpeed = value * verticalDirection * time;
+        
+        //enemySpeed = value;
+        //Debug.Log("Enemy speed set at: " + value);
+        //GameObject.FindGameObjectWithTag("BackgroundControl").SendMessage("SetSpeed", value, SendMessageOptions.DontRequireReceiver);
+        GameObject.FindGameObjectWithTag("BackgroundControl").SendMessage("SetSpeed", mainSpeed, SendMessageOptions.DontRequireReceiver);
     }
 
     void SetSpawnDistance(float value)
