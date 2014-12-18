@@ -488,9 +488,11 @@ public class GameController : MonoBehaviour
     {
         if (tempoTotal > times[index])
         {
-            methodName(values[index]);
             if (times.Count == index + 1) return;
             else index++;
+
+            methodName(values[index]);
+
             return;
         }
     }

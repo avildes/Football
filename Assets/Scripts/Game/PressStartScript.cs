@@ -11,7 +11,7 @@ public class PressStartScript : MonoBehaviour
 		timer = 0;
 
 		AnalyticsManager.Instance.LogScene("Splash");
-        StartCoroutine(Flash());
+        //StartCoroutine(Flash());
 	}
 	
 	void Update ()

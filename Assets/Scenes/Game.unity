@@ -2207,15 +2207,15 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: 62ccaa2f9dd3bcd40b2d276267468bdb, type: 2}
       propertyPath: intervalosDeIncrementoDeVelocidade.Array.data[1]
-      value: 2.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 11400000, guid: 62ccaa2f9dd3bcd40b2d276267468bdb, type: 2}
-      propertyPath: intervalosDeIncrementoDeVelocidade.Array.data[2]
       value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: 62ccaa2f9dd3bcd40b2d276267468bdb, type: 2}
+      propertyPath: intervalosDeIncrementoDeVelocidade.Array.data[2]
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: 62ccaa2f9dd3bcd40b2d276267468bdb, type: 2}
       propertyPath: intervalosDeIncrementoDeVelocidade.Array.data[3]
-      value: 10
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: 62ccaa2f9dd3bcd40b2d276267468bdb, type: 2}
       propertyPath: incrementosDeVelocidade.Array.data[1]
@@ -2227,7 +2227,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: 62ccaa2f9dd3bcd40b2d276267468bdb, type: 2}
       propertyPath: incrementosDeVelocidade.Array.data[3]
-      value: 10
+      value: 9.5
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: 62ccaa2f9dd3bcd40b2d276267468bdb, type: 2}
       propertyPath: intervalosDeIncrementoProbabilidadeSpawn.Array.data[0]
@@ -2267,11 +2267,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: 62ccaa2f9dd3bcd40b2d276267468bdb, type: 2}
       propertyPath: incrementosDeVelocidade.Array.data[4]
-      value: 10.5
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: 62ccaa2f9dd3bcd40b2d276267468bdb, type: 2}
       propertyPath: intervalosDeIncrementoDeVelocidade.Array.data[4]
-      value: 12.5
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: 62ccaa2f9dd3bcd40b2d276267468bdb, type: 2}
       propertyPath: scoreIncrement
@@ -2287,11 +2287,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: 62ccaa2f9dd3bcd40b2d276267468bdb, type: 2}
       propertyPath: intervalosDeIncrementoDeVelocidade.Array.data[5]
-      value: 15
+      value: 17
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: 62ccaa2f9dd3bcd40b2d276267468bdb, type: 2}
       propertyPath: incrementosDeVelocidade.Array.data[5]
-      value: 11
+      value: 10.5
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: 62ccaa2f9dd3bcd40b2d276267468bdb, type: 2}
       propertyPath: enableCollision
@@ -2303,15 +2303,15 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: 62ccaa2f9dd3bcd40b2d276267468bdb, type: 2}
       propertyPath: distanciasEntreSpawns.Array.data[0]
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: 62ccaa2f9dd3bcd40b2d276267468bdb, type: 2}
       propertyPath: distanciasEntreSpawns.Array.data[1]
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: 62ccaa2f9dd3bcd40b2d276267468bdb, type: 2}
       propertyPath: distanciasEntreSpawns.Array.data[2]
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: 62ccaa2f9dd3bcd40b2d276267468bdb, type: 2}
       propertyPath: intervalosDistanciaEntreSpawns.Array.data[1]
@@ -2859,18 +2859,18 @@ MonoBehaviour:
   bgVerticalDirection: -1
   intervalosDeIncrementoDeVelocidade:
   - 0
-  - 2.5
   - 5
-  - 10
-  - 12.5
+  - 7
+  - 12
   - 15
+  - 17
   incrementosDeVelocidade:
   - 8
   - 8.5
   - 9
+  - 9.5
   - 10
   - 10.5
-  - 11
   intervalosDeIncrementoProbabilidadeSpawn:
   - 0
   - 5
@@ -2886,9 +2886,9 @@ MonoBehaviour:
   - 5
   - 10
   distanciasEntreSpawns:
+  - 5
   - 4
   - 3
-  - 2
   touchFX: {fileID: 8300000, guid: c5a7926646c104e97bc4c4300c7fc874, type: 3}
   dieFX: {fileID: 8300000, guid: 40d0c70bc964aaa49a5aa49afe66f611, type: 3}
   encoreClip: {fileID: 8300000, guid: 9a3c3a23694ce4b41a12df2ae73bef68, type: 3}
