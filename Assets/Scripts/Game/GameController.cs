@@ -87,8 +87,7 @@ public class GameController : MonoBehaviour
 
     private bool resetHiScore;
 
-    public delegate void ClickHandler();
-    public static event ClickHandler onGameOver;
+    
 
     private bool play;
 
@@ -108,6 +107,8 @@ public class GameController : MonoBehaviour
 
     void Start()
     {
+        CollisionEventManager.onGameOver += GameOver;
+
         StartGame();
     }
 
@@ -153,6 +154,8 @@ public class GameController : MonoBehaviour
         //SetSpeed(8);
         //SetSpawnDistance(4);
         //
+
+        AdBehaviour.Instance.HideBannerView();
     }
 
     IEnumerator Init()
@@ -291,7 +294,7 @@ public class GameController : MonoBehaviour
             StartGame();
         }
     }
-
+/*
     void OnGUI()
     {
         if (gameState == GameState.GAME)
@@ -305,7 +308,7 @@ public class GameController : MonoBehaviour
             }
         }
     }
-
+    */
     void Update()
     {
         HandleInput();
@@ -512,7 +515,7 @@ public class GameController : MonoBehaviour
         //gameOver = true;
 
         //Fires the onGameOver event
-        onGameOver();
+        //onGameOver();
         //APAGAR
         //retryCount.transform.GetChild(0).gameObject.GetComponent<TextMesh>().text = (LoadRetryCount()).ToString();
 
@@ -620,5 +623,10 @@ public class GameController : MonoBehaviour
         enc.clip = clip;
         enc.loop = false;
         enc.Play();
+    }
+
+    void OnDestroy()
+    {
+        CollisionEventManager.onGameOver -= GameOver;
     }
 }

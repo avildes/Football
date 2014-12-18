@@ -28,20 +28,22 @@ public class AdBehaviour : MonoBehaviour
 		{
 			Instance = this;   
 		}
-		
-		GameController.onGameOver += ActivateBanner;
+
+        CollisionEventManager.onGameOver += ActivateBanner;
 		
 		if(interstitialAd == null) CreateInterstitialAd();
 		if(bannerView == null) CreateBannerView();
         // if this user does not have bought the remove ads add on
         //else
-		ShowBannerView();
+		
+        //ShowBannerView();
+        
         //HideBannerView();
     }
 
     void OnDestroy()
     {
-        GameController.onGameOver -= ActivateBanner;
+        CollisionEventManager.onGameOver -= ActivateBanner;
         bannerView.Destroy();
     }
 
@@ -54,10 +56,11 @@ public class AdBehaviour : MonoBehaviour
         if(count > 10)
         {
 			ShowInterstitialAd();
-			SaveRetryCount(0);
+			SaveRetryCount(1);
         }
 		else
 		{
+            ShowBannerView();
 			count += 1;
 			SaveRetryCount(count);
 		}
@@ -90,9 +93,9 @@ public class AdBehaviour : MonoBehaviour
         bannerView.Show();
     }
 
-    private void HideBannerView()
+    public void HideBannerView()
     {
-        bannerView.Hide();
+        if(bannerView != null)  bannerView.Hide();
     }
     #endregion
 
