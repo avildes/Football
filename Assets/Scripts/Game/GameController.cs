@@ -262,15 +262,14 @@ public class GameController : MonoBehaviour
         ///dd
 
 
-        if ((Input.touchCount == 1) && (Input.touches[0].phase.Equals(TouchPhase.Ended)))
+        if ((Input.touchCount == 1) && (Input.touches[0].phase.Equals(TouchPhase.Began)))
         {
             if (gameState == GameState.TUTORIAL)
             {
                 tutorial.SetActive(false);
                 gameState = GameState.GAME;
             }
-
-            if (gameState == GameState.GAME)
+            else if (gameState == GameState.GAME)
             {
                 var touch = Input.touches[0];
                 if (touch.position.x < Screen.width / 2)
