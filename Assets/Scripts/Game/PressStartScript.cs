@@ -6,11 +6,16 @@ public class PressStartScript : MonoBehaviour
 {
 	public float timer;
 
+	private enum State{ListeningForInput, WaitingFadeOut};
+	private State state;
+
 	void Start ()
     {
 		timer = 0;
 
 		AnalyticsManager.Instance.LogScene("Splash");
+		state = State.ListeningForInput;
+
         //StartCoroutine(Flash());
 	}
 	
@@ -18,19 +23,31 @@ public class PressStartScript : MonoBehaviour
     {
 		timer += Time.deltaTime;
 
-	    if(Input.touchCount == 1 || Input.GetKeyDown(KeyCode.Space))
-        {
-			SaveTimer();
-			AnalyticsManager.Instance.LogSceneTransition("Splash", "Game");
-            Application.LoadLevel("game");
-        }
-
-		if (Input.GetKeyDown(KeyCode.Escape))
+		if (state == State.ListeningForInput) 
 		{
-			SaveTimer();
-			AnalyticsManager.Instance.LogSceneTransition("Splash", "Quit");
-			Application.Quit();
+			if (Input.touchCount == 1 || Input.GetKeyDown (KeyCode.Space)) 
+			{
+				FadeInOut.instance.StartFadeToBlack (gameObject, "OnFadeOutComplete");
+				state = State.WaitingFadeOut;
+				//			SaveTimer();
+				//			AnalyticsManager.Instance.LogSceneTransition("Splash", "Game");
+				//            Application.LoadLevel("game");
+			}
+
+			if (Input.GetKeyDown (KeyCode.Escape)) {
+				SaveTimer ();
+				AnalyticsManager.Instance.LogSceneTransition ("Splash", "Quit");
+				Application.Quit ();
+			}
 		}
+	}
+
+
+	private void OnFadeOutComplete()
+	{
+		SaveTimer();
+		AnalyticsManager.Instance.LogSceneTransition("Splash", "Game");
+		Application.LoadLevel("game");
 	}
 
 	void SaveTimer()
