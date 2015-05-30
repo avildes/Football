@@ -25,6 +25,7 @@ public class FadeInOut : MonoBehaviour
 	{
 		if(instance == null)
 		{
+			image.enabled = true;
 			state = FadeState.ToClear;
 			instance = this;
 		}
