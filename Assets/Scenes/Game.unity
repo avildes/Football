@@ -2303,11 +2303,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: 62ccaa2f9dd3bcd40b2d276267468bdb, type: 2}
       propertyPath: incrementosDeVelocidade.Array.data[0]
-      value: 8
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: 62ccaa2f9dd3bcd40b2d276267468bdb, type: 2}
       propertyPath: intervalosDeIncrementoDeVelocidade.Array.data[1]
-      value: 5
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: 62ccaa2f9dd3bcd40b2d276267468bdb, type: 2}
       propertyPath: intervalosDeIncrementoDeVelocidade.Array.data[2]
@@ -2315,19 +2315,19 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: 62ccaa2f9dd3bcd40b2d276267468bdb, type: 2}
       propertyPath: intervalosDeIncrementoDeVelocidade.Array.data[3]
-      value: 12
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: 62ccaa2f9dd3bcd40b2d276267468bdb, type: 2}
       propertyPath: incrementosDeVelocidade.Array.data[1]
-      value: 8.5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: 62ccaa2f9dd3bcd40b2d276267468bdb, type: 2}
       propertyPath: incrementosDeVelocidade.Array.data[2]
-      value: 9
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: 62ccaa2f9dd3bcd40b2d276267468bdb, type: 2}
       propertyPath: incrementosDeVelocidade.Array.data[3]
-      value: 9.5
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: 62ccaa2f9dd3bcd40b2d276267468bdb, type: 2}
       propertyPath: intervalosDeIncrementoProbabilidadeSpawn.Array.data[0]
@@ -2367,7 +2367,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: 62ccaa2f9dd3bcd40b2d276267468bdb, type: 2}
       propertyPath: incrementosDeVelocidade.Array.data[4]
-      value: 10
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: 62ccaa2f9dd3bcd40b2d276267468bdb, type: 2}
       propertyPath: intervalosDeIncrementoDeVelocidade.Array.data[4]
@@ -2387,11 +2387,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: 62ccaa2f9dd3bcd40b2d276267468bdb, type: 2}
       propertyPath: intervalosDeIncrementoDeVelocidade.Array.data[5]
-      value: 17
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: 62ccaa2f9dd3bcd40b2d276267468bdb, type: 2}
       propertyPath: incrementosDeVelocidade.Array.data[5]
-      value: 10.5
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: 62ccaa2f9dd3bcd40b2d276267468bdb, type: 2}
       propertyPath: enableCollision
