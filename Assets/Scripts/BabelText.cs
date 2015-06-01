@@ -9,12 +9,34 @@ public class BabelText : MonoBehaviour
 	[SerializeField] private string stringKey;
 	[SerializeField] private bool showInEdit;
 
+	private bool initialized;
+
 	// Use this for initialization
 	void Start () 
 	{
 		textfield = gameObject.GetComponent<Text>();
-		if(stringKey.Length > 0) textfield.text = BabelManager.instance.GetText(stringKey);
+
+		if(BabelManager.instance)
+		{
+			initialized = BabelManager.instance.IsInitialized();
+			if(stringKey.Length > 0) if(initialized) LoadText();
+		}
 	}
 
+	void Update()
+	{
+		if(!initialized)
+		{
+			initialized = BabelManager.instance.IsInitialized();
+			if(initialized) 
+			{
+				LoadText();
+			}
+		}
+	}
 
+	private void LoadText()
+	{
+		textfield.text = BabelManager.instance.GetText(stringKey);
+	}
 }

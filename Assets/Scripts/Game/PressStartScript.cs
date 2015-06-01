@@ -42,7 +42,6 @@ public class PressStartScript : MonoBehaviour
 		}
 	}
 
-
 	private void OnFadeOutComplete()
 	{
 		SaveTimer();
@@ -53,7 +52,6 @@ public class PressStartScript : MonoBehaviour
 	void SaveTimer()
 	{
 		AnalyticsManager.Instance.LogTimeSpent("Time Spent on Splash Screen", (int) timer);
-
 	}
 
     IEnumerator Flash()

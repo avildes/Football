@@ -12,6 +12,8 @@ public class BabelManager : MonoBehaviour
 	[SerializeField] private bool overrideSystLang;
 	[SerializeField] private SystemLanguage language;
 
+	private bool initialized;
+
 	// Use this for initialization
 	void Start () 
 	{
@@ -33,19 +35,29 @@ public class BabelManager : MonoBehaviour
 
 		texts = new Dictionary<string, string>();
 
+
+		//TODO: Load the correct language JSON file
+
 		if(language == SystemLanguage.Portuguese)
 		{
-			texts.Add("credits", "Creditos");
-			texts.Add("creditsGD", "Game Design \nPietro Amaral");
-			texts.Add("creditsDev1", "Programming \nAntonio Vieldes");
-			texts.Add("creditsArt", "Art \nArtur \"Pirata\"" );
-			texts.Add("creditsDev2", "Additional Programming \nSilvio Carrera");
+			texts.Add("credits", "Credits");
+			texts.Add("creditsGD", "- Game Design -\nPietro Amaral");
+			texts.Add("creditsArt", "- Art -\nArtur \"Pirata\"" );
+			texts.Add("creditsDev1", "- Programming -\nAntonio Vieldes");
+			texts.Add("creditsDev2", "- Additional Programming -\nSilvio Carrera");
+			texts.Add("creditsMusic", "- Music/Sfx -\nLuiz Manghi");
 		}
-	
+
+		initialized = true;
 	}
 	
 	public string GetText(string stringKey)
 	{
 		return texts[stringKey];
+	}
+
+	public bool IsInitialized()
+	{
+		return initialized;
 	}
 }
