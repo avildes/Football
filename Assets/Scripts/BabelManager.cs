@@ -42,8 +42,8 @@ public class BabelManager : MonoBehaviour
 		{
 			texts.Add("credits", "Credits");
 			texts.Add("creditsGD", "- Game Design -\nPietro Amaral");
-			texts.Add("creditsArt", "- Art -\nArtur \"Pirata\"" );
-			texts.Add("creditsDev1", "- Programming -\nAntonio Vieldes");
+			texts.Add("creditsArt", "- Art -\nArthur \"Pirata\"" );
+			texts.Add("creditsDev1", "- Programming -\nAntonio Vildes");
 			texts.Add("creditsDev2", "- Additional Programming -\nSilvio Carrera");
 			texts.Add("creditsMusic", "- Music/Sfx -\nLuiz Manghi");
 		}
