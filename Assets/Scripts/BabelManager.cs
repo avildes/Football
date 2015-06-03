@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-
+using SimpleJSON;
 
 public class BabelManager : MonoBehaviour 
 {
@@ -40,12 +40,16 @@ public class BabelManager : MonoBehaviour
 
 		if(language == SystemLanguage.Portuguese)
 		{
-			texts.Add("credits", "Credits");
-			texts.Add("creditsGD", "- Game Design -\nPietro Amaral");
-			texts.Add("creditsArt", "- Art -\nArthur \"Pirata\"" );
-			texts.Add("creditsDev1", "- Programming -\nAntonio Vildes");
-			texts.Add("creditsDev2", "- Additional Programming -\nSilvio Carrera");
-			texts.Add("creditsMusic", "- Music/Sfx -\nLuiz Manghi");
+			TextAsset mJson = Resources.Load("strings_pt") as TextAsset;
+			var strings = JSON.Parse(mJson.text);
+
+
+			texts.Add("credits", strings["credits"].Value);
+			texts.Add("creditsGD", strings["creditsGD"].Value);
+			texts.Add("creditsArt", strings["creditsArt"].Value);
+			texts.Add("creditsDev1", strings["creditsDev1"].Value);
+			texts.Add("creditsDev2", strings["creditsDev2"].Value);
+			texts.Add("creditsMusic", strings["creditsMusic"].Value);
 		}
 
 		initialized = true;
