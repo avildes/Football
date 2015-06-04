@@ -28,10 +28,7 @@ public class BabelText : MonoBehaviour
 		if(!initialized)
 		{
 			initialized = BabelManager.instance.IsInitialized();
-			if(initialized) 
-			{
-				LoadText();
-			}
+			if(initialized)  LoadText();
 		}
 	}
 

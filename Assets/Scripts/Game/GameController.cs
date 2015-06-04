@@ -18,6 +18,9 @@ public class GameController : MonoBehaviour
     public List<GameObject> enemies;
     public List<GameObject> notActiveEnemies;
 
+	public GameObject[] enemyPrefabs;
+	private int currentEnemySet;
+
     public GameObject enemyPrefab;
 
     public GameObject scoreObj;
@@ -107,6 +110,8 @@ public class GameController : MonoBehaviour
 
     void Start()
     {
+		currentEnemySet = UnityEngine.Random.Range(0, enemyPrefabs.Length);
+
         CollisionEventManager.onGameOver += GameOver;
 
         StartGame();
@@ -114,6 +119,8 @@ public class GameController : MonoBehaviour
 
     void StartGame()
     {
+
+
         tempoTotal = 0;
         score = 0;
         scoreObj.GetComponent<Text>().text = (int)score + "";
@@ -156,6 +163,8 @@ public class GameController : MonoBehaviour
         //
 
         AdBehaviour.Instance.HideBannerView();
+
+
     }
 
     IEnumerator Init()
@@ -290,6 +299,16 @@ public class GameController : MonoBehaviour
         {
             AnalyticsManager.Instance.LogSceneTransition("Retry", "Game");
             gameState = GameState.TUTORIAL;
+
+
+			currentEnemySet = UnityEngine.Random.Range(0, enemyPrefabs.Length);
+
+			notActiveEnemies.Clear();
+	
+
+			GameObject.FindGameObjectWithTag("BackgroundControl").GetComponent<RandomSprite>().Randomize();
+
+
             StartGame();
         }
     }
@@ -455,7 +474,10 @@ public class GameController : MonoBehaviour
 
                 if ((enemies.Count + notActiveEnemies.Count) < 7)
                 {
-                    GameObject enemy = Instantiate(enemyPrefab, new Vector3(x, enemySpawnYPosition, 0), Quaternion.identity) as GameObject;
+					GameObject enemyPrefab = enemyPrefabs[currentEnemySet];
+					GameObject enemy = Instantiate(enemyPrefab, new Vector3(x, enemySpawnYPosition, 0), Quaternion.identity) as GameObject;
+
+//                    GameObject enemy = Instantiate(enemyPrefab, new Vector3(x, enemySpawnYPosition, 0), Quaternion.identity) as GameObject;
 
                     enemies.Add(enemy);
                 }

@@ -4,6 +4,7 @@ using System.Collections;
 public class AndroidInputHandler : MonoBehaviour 
 {
 	[SerializeField] private bool workOnPC;
+	
 
 	// Use this for initialization
 	void Start () 

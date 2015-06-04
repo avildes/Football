@@ -36,20 +36,25 @@ public class BabelManager : MonoBehaviour
 		texts = new Dictionary<string, string>();
 
 
-		//TODO: Load the correct language JSON file
+
 
 		if(language == SystemLanguage.Portuguese)
 		{
 			TextAsset mJson = Resources.Load("strings_pt") as TextAsset;
-			var strings = JSON.Parse(mJson.text);
+			JSONNode nodes = JSON.Parse(mJson.text);
 
 
-			texts.Add("credits", strings["credits"].Value);
-			texts.Add("creditsGD", strings["creditsGD"].Value);
-			texts.Add("creditsArt", strings["creditsArt"].Value);
-			texts.Add("creditsDev1", strings["creditsDev1"].Value);
-			texts.Add("creditsDev2", strings["creditsDev2"].Value);
-			texts.Add("creditsMusic", strings["creditsMusic"].Value);
+			//TODO: Mount dictionary dinamicaly
+//			for(int i = 0; i < nodes.Count; i++)
+//			{
+//
+//				texts.Add(nodes[i], nodes[i].Value);
+//			}
+			texts.Add("credits", nodes["credits"].Value);
+			texts.Add("creditsGD", nodes["creditsGD"].Value);
+			texts.Add("creditsArt", nodes["creditsArt"].Value);
+			texts.Add("creditsDev", nodes["creditsDev"].Value);
+			texts.Add("creditsMusic", nodes["creditsMusic"].Value);
 		}
 
 		initialized = true;
