@@ -2271,7 +2271,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: 62ccaa2f9dd3bcd40b2d276267468bdb, type: 2}
       propertyPath: incrementosProbabilidadeSpawn.Array.size
-      value: 4
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: 62ccaa2f9dd3bcd40b2d276267468bdb, type: 2}
       propertyPath: intervalosDistanciaEntreSpawns.Array.size
@@ -2283,7 +2283,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: 62ccaa2f9dd3bcd40b2d276267468bdb, type: 2}
       propertyPath: intervalosDeIncrementoProbabilidadeSpawn.Array.size
-      value: 4
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 62ccaa2f9dd3bcd40b2d276267468bdb, type: 2}
       propertyPath: m_LocalPosition.x
@@ -2347,7 +2347,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: 62ccaa2f9dd3bcd40b2d276267468bdb, type: 2}
       propertyPath: incrementosDeVelocidade.Array.data[0]
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: 62ccaa2f9dd3bcd40b2d276267468bdb, type: 2}
       propertyPath: intervalosDeIncrementoDeVelocidade.Array.data[1]
@@ -2363,15 +2363,15 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: 62ccaa2f9dd3bcd40b2d276267468bdb, type: 2}
       propertyPath: incrementosDeVelocidade.Array.data[1]
-      value: 6
+      value: 7.5
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: 62ccaa2f9dd3bcd40b2d276267468bdb, type: 2}
       propertyPath: incrementosDeVelocidade.Array.data[2]
-      value: 7
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: 62ccaa2f9dd3bcd40b2d276267468bdb, type: 2}
       propertyPath: incrementosDeVelocidade.Array.data[3]
-      value: 9
+      value: 10.5
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: 62ccaa2f9dd3bcd40b2d276267468bdb, type: 2}
       propertyPath: intervalosDeIncrementoProbabilidadeSpawn.Array.data[0]
@@ -2387,15 +2387,15 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: 62ccaa2f9dd3bcd40b2d276267468bdb, type: 2}
       propertyPath: incrementosProbabilidadeSpawn.Array.data[0]
-      value: .25
+      value: .100000001
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: 62ccaa2f9dd3bcd40b2d276267468bdb, type: 2}
       propertyPath: incrementosProbabilidadeSpawn.Array.data[1]
-      value: .5
+      value: .200000003
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: 62ccaa2f9dd3bcd40b2d276267468bdb, type: 2}
       propertyPath: incrementosProbabilidadeSpawn.Array.data[2]
-      value: .75
+      value: .400000006
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: 62ccaa2f9dd3bcd40b2d276267468bdb, type: 2}
       propertyPath: bgVerticalDirection
@@ -2411,7 +2411,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: 62ccaa2f9dd3bcd40b2d276267468bdb, type: 2}
       propertyPath: incrementosDeVelocidade.Array.data[4]
-      value: 11
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: 62ccaa2f9dd3bcd40b2d276267468bdb, type: 2}
       propertyPath: intervalosDeIncrementoDeVelocidade.Array.data[4]
@@ -2435,7 +2435,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: 62ccaa2f9dd3bcd40b2d276267468bdb, type: 2}
       propertyPath: incrementosDeVelocidade.Array.data[5]
-      value: 13
+      value: 13.5
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: 62ccaa2f9dd3bcd40b2d276267468bdb, type: 2}
       propertyPath: enableCollision
@@ -2523,15 +2523,15 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: 62ccaa2f9dd3bcd40b2d276267468bdb, type: 2}
       propertyPath: intervalosDeIncrementoProbabilidadeSpawn.Array.data[4]
-      value: 30
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: 62ccaa2f9dd3bcd40b2d276267468bdb, type: 2}
       propertyPath: incrementosProbabilidadeSpawn.Array.data[3]
-      value: 1
+      value: .5
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: 62ccaa2f9dd3bcd40b2d276267468bdb, type: 2}
       propertyPath: incrementosProbabilidadeSpawn.Array.data[4]
-      value: 1
+      value: .600000024
       objectReference: {fileID: 0}
     - target: {fileID: 11400002, guid: 62ccaa2f9dd3bcd40b2d276267468bdb, type: 2}
       propertyPath: tutorial
@@ -2569,6 +2569,38 @@ Prefab:
       propertyPath: enemyPrefabs.Array.data[2]
       value: 
       objectReference: {fileID: 159256, guid: ac5d02e1408fa1a4fa8342287b907fc8, type: 2}
+    - target: {fileID: 11400000, guid: 62ccaa2f9dd3bcd40b2d276267468bdb, type: 2}
+      propertyPath: intervalosDeIncrementoProbabilidadeSpawn.Array.data[5]
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: 62ccaa2f9dd3bcd40b2d276267468bdb, type: 2}
+      propertyPath: intervalosDeIncrementoProbabilidadeSpawn.Array.data[6]
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: 62ccaa2f9dd3bcd40b2d276267468bdb, type: 2}
+      propertyPath: intervalosDeIncrementoProbabilidadeSpawn.Array.data[7]
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: 62ccaa2f9dd3bcd40b2d276267468bdb, type: 2}
+      propertyPath: incrementosProbabilidadeSpawn.Array.data[5]
+      value: .75
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: 62ccaa2f9dd3bcd40b2d276267468bdb, type: 2}
+      propertyPath: incrementosProbabilidadeSpawn.Array.data[6]
+      value: .899999976
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: 62ccaa2f9dd3bcd40b2d276267468bdb, type: 2}
+      propertyPath: incrementosProbabilidadeSpawn.Array.data[7]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: 62ccaa2f9dd3bcd40b2d276267468bdb, type: 2}
+      propertyPath: intervalosDistanciaEntreSpawns.Array.data[3]
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: 62ccaa2f9dd3bcd40b2d276267468bdb, type: 2}
+      propertyPath: distanciasEntreSpawns.Array.data[3]
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 62ccaa2f9dd3bcd40b2d276267468bdb, type: 2}
   m_IsPrefabParent: 0
@@ -2897,11 +2929,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1979908257}
   m_RootOrder: 0
---- !u!1 &1794457355
+--- !u!1 &1794457355 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 100000, guid: 62ccaa2f9dd3bcd40b2d276267468bdb, type: 2}
   m_PrefabInternal: {fileID: 1596846205}
---- !u!114 &1794457356
+--- !u!114 &1794457356 stripped
 MonoBehaviour:
   m_PrefabParentObject: {fileID: 11400002, guid: 62ccaa2f9dd3bcd40b2d276267468bdb,
     type: 2}
