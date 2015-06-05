@@ -126,6 +126,7 @@ public class GameController : MonoBehaviour
         scoreObj.GetComponent<Text>().text = (int)score + "";
 
         SendGameOverToBGController(false);
+		player.GetComponent<Animator>().Play("Run");
         player.SetActive(true);
         hud.SetActive(true);
         retry.SetActive(false);
@@ -303,7 +304,12 @@ public class GameController : MonoBehaviour
 
 			currentEnemySet = UnityEngine.Random.Range(0, enemyPrefabs.Length);
 
-			notActiveEnemies.Clear();
+			for(int i = 0; i < notActiveEnemies.Count; i++) 
+			{
+				Destroy(notActiveEnemies[0]);
+				notActiveEnemies.Remove(notActiveEnemies[0].gameObject); 
+			} 
+//			notActiveEnemies.Clear();
 	
 
 			GameObject.FindGameObjectWithTag("BackgroundControl").GetComponent<RandomSprite>().Randomize();
@@ -544,22 +550,27 @@ public class GameController : MonoBehaviour
 
         AnalyticsManager.Instance.LogScene("Retry");
 
+		player.transform.GetChild(0).gameObject.SetActive(false);
         PlayDieFX();
 
-        SendGameOverToBGController(true);
-        player.SetActive(false);
-        hud.SetActive(false);
-        retry.SetActive(true);
+//        SendGameOverToBGController(true);
 
-        AnalyticsManager.Instance.LogTimeSpent("Match Duration", (int)tempoTotal);
 
-        for (int i = 0; i < enemies.Count; i++)
-        {
-            enemies[i].SetActive(false);
-            notActiveEnemies.Add(enemies[i]);
-            enemies.RemoveAt(i);
-            i--;
-        }
+//        player.SetActive(false);
+//        hud.SetActive(false);
+//        retry.SetActive(true);
+
+        
+
+//        for (int i = 0; i < enemies.Count; i++)
+//        {
+//            enemies[i].SetActive(false);
+//            notActiveEnemies.Add(enemies[i]);
+//            enemies.RemoveAt(i);
+//            i--;
+//        }
+
+		AnalyticsManager.Instance.LogTimeSpent("Match Duration", (int)tempoTotal);
 
         int sc = (int)score;
         int best;
@@ -575,9 +586,33 @@ public class GameController : MonoBehaviour
         }
 
         finalScoreObj.GetComponent<Text>().text = sc.ToString();
+        recordObj.GetComponent<Text>().text =  best.ToString(); 
 
-        recordObj.GetComponent<Text>().text = best.ToString();
+
+		StartCoroutine(PlayerDeath());
     }
+
+	IEnumerator PlayerDeath() 
+	{
+		Animator playerAnim = player.GetComponent<Animator>();
+		playerAnim.SetTrigger("onDeath");
+		yield return new WaitForSeconds(1.1f);
+
+		for (int i = 0; i < enemies.Count; i++)
+		{
+			enemies[i].SetActive(false);
+			notActiveEnemies.Add(enemies[i]);
+			enemies.RemoveAt(i);
+			i--;
+		}
+
+
+		player.transform.GetChild(0).gameObject.SetActive(true);
+		player.SetActive(false);
+        hud.SetActive(false);
+        retry.SetActive(true);
+
+	}
 
     void SendGameOverToBGController(bool value)
     {
@@ -592,6 +627,7 @@ public class GameController : MonoBehaviour
 
     void PlayDieFX()
     {
+
         source.clip = dieFX;
         source.Play();
     }
