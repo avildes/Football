@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class SceneChange : MonoBehaviour
@@ -8,7 +8,7 @@ public class SceneChange : MonoBehaviour
 	
 	void Start ()
 	{
-		if(Application.isMobilePlatform)  AnalyticsManager.Instance.LogScene(Application.loadedLevelName);
+		if(Application.isMobilePlatform)  AnalyticsManager.instance.LogScene(Application.loadedLevelName);
 	}
 
 	void Update()
@@ -24,13 +24,13 @@ public class SceneChange : MonoBehaviour
 
 	void SaveTimer()
 	{
-		if(Application.isMobilePlatform) AnalyticsManager.Instance.LogTimeSpent("Time Spent on " + Application.loadedLevelName + " Screen", (int) timeElapsed);
+		if(Application.isMobilePlatform) AnalyticsManager.instance.LogTimeSpent("Time Spent on " + Application.loadedLevelName + " Screen", (int) timeElapsed);
 	}
 	
 	
 	private void OnFadeOutComplete()
 	{
-		if(Application.isMobilePlatform) AnalyticsManager.Instance.LogSceneTransition (Application.loadedLevelName, sceneToGo);
+		if(Application.isMobilePlatform) AnalyticsManager.instance.LogSceneTransition (Application.loadedLevelName, sceneToGo);
 		Application.LoadLevel(sceneToGo);
 	}
 	

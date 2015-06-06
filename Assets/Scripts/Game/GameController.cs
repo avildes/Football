@@ -18,7 +18,7 @@ public class GameController : MonoBehaviour
     public List<GameObject> enemies;
     public List<GameObject> notActiveEnemies;
 
-	public GameObject[] enemyPrefabs;
+	public RuntimeAnimatorController[] enemyAnimators;
 	private int currentEnemySet;
 
     public GameObject enemyPrefab;
@@ -110,7 +110,7 @@ public class GameController : MonoBehaviour
 
     void Start()
     {
-		currentEnemySet = UnityEngine.Random.Range(0, enemyPrefabs.Length);
+		currentEnemySet = UnityEngine.Random.Range(0, enemyAnimators.Length);
 
         CollisionEventManager.onGameOver += GameOver;
 
@@ -131,7 +131,7 @@ public class GameController : MonoBehaviour
         hud.SetActive(true);
         retry.SetActive(false);
 
-        AnalyticsManager.Instance.LogScene("Game");
+        if(AnalyticsManager.instance != null) AnalyticsManager.instance.LogScene("Game");
 
         source = GetComponent<AudioSource>();
         source.loop = false;
@@ -297,19 +297,17 @@ public class GameController : MonoBehaviour
     public void Retry()
     {
         if (gameState == GameState.GAMEOVER)
-        {
-            AnalyticsManager.Instance.LogSceneTransition("Retry", "Game");
-            gameState = GameState.TUTORIAL;
+        { 
+            AnalyticsManager.instance.LogSceneTransition("Retry", "Game");
+            gameState = GameState.TUTORIAL; 
+			  
 
-
-			currentEnemySet = UnityEngine.Random.Range(0, enemyPrefabs.Length);
+			currentEnemySet = UnityEngine.Random.Range(0, enemyAnimators.Length);
 
 			for(int i = 0; i < notActiveEnemies.Count; i++) 
 			{
-				Destroy(notActiveEnemies[0]);
-				notActiveEnemies.Remove(notActiveEnemies[0].gameObject); 
+				notActiveEnemies[i].GetComponent<Animator>().runtimeAnimatorController = enemyAnimators[currentEnemySet] ;
 			} 
-//			notActiveEnemies.Clear();
 	
 
 			GameObject.FindGameObjectWithTag("BackgroundControl").GetComponent<RandomSprite>().Randomize();
@@ -350,7 +348,7 @@ public class GameController : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Escape))
             {
-                AnalyticsManager.Instance.LogSceneTransition("Retry", "Splash");
+                AnalyticsManager.instance.LogSceneTransition("Retry", "Splash");
 
                 Application.LoadLevel("start");
             }
@@ -480,13 +478,14 @@ public class GameController : MonoBehaviour
 
                 if ((enemies.Count + notActiveEnemies.Count) < 7)
                 {
-					GameObject enemyPrefab = enemyPrefabs[currentEnemySet];
-					GameObject enemy = Instantiate(enemyPrefab, new Vector3(x, enemySpawnYPosition, 0), Quaternion.identity) as GameObject;
+//					GameObject enemyPrefab = enemyPrefabs[currentEnemySet];
+//					GameObject enemy = Instantiate(enemyPrefab, new Vector3(x, enemySpawnYPosition, 0), Quaternion.identity) as GameObject;
 
-//                    GameObject enemy = Instantiate(enemyPrefab, new Vector3(x, enemySpawnYPosition, 0), Quaternion.identity) as GameObject;
+                    GameObject enemy = Instantiate(enemyPrefab, new Vector3(x, enemySpawnYPosition, 0), Quaternion.identity) as GameObject;
+					enemy.GetComponent<Animator>().runtimeAnimatorController = enemyAnimators[currentEnemySet];
 
                     enemies.Add(enemy);
-                }
+                } 
                 else
                 {
                     if (notActiveEnemies.Count <= 0) Debug.Log("NotActiveEnemies.Count <= 0");
@@ -548,7 +547,7 @@ public class GameController : MonoBehaviour
         //APAGAR
         //retryCount.transform.GetChild(0).gameObject.GetComponent<TextMesh>().text = (LoadRetryCount()).ToString();
 
-        AnalyticsManager.Instance.LogScene("Retry");
+        AnalyticsManager.instance.LogScene("Retry");
 
 		player.transform.GetChild(0).gameObject.SetActive(false);
         PlayDieFX();
@@ -570,13 +569,13 @@ public class GameController : MonoBehaviour
 //            i--;
 //        }
 
-		AnalyticsManager.Instance.LogTimeSpent("Match Duration", (int)tempoTotal);
+		AnalyticsManager.instance.LogTimeSpent("Match Duration", (int)tempoTotal);
 
         int sc = (int)score;
         int best;
         if (LoadBest() < sc)
         {
-            AnalyticsManager.Instance.LogHiScore(sc);
+            AnalyticsManager.instance.LogHiScore(sc);
             SaveBest(sc);
             best = sc;
         }

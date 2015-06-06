@@ -25,6 +25,11 @@ public class AudioManager : MonoBehaviour
 
 	}
 
+	public void PlayMusic()
+	{
+		musicChannel.Play();
+	}
+
 	public void Toggle () 
 	{
 		if(AudioListener.volume == 0) Unmute();

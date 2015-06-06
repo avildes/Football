@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using GoogleMobileAds.Api;
 
@@ -13,7 +13,7 @@ public class PressStartScript : MonoBehaviour
     {
 		timer = 0;
 
-		AnalyticsManager.Instance.LogScene("Splash");
+		AnalyticsManager.instance.LogScene("Splash");
 		state = State.ListeningForInput;
 
         //StartCoroutine(Flash());
@@ -36,7 +36,7 @@ public class PressStartScript : MonoBehaviour
 
 			if (Input.GetKeyDown (KeyCode.Escape)) {
 				SaveTimer ();
-				AnalyticsManager.Instance.LogSceneTransition ("Splash", "Quit");
+				AnalyticsManager.instance.LogSceneTransition ("Splash", "Quit");
 				Application.Quit ();
 			}
 		}
@@ -45,13 +45,13 @@ public class PressStartScript : MonoBehaviour
 	private void OnFadeOutComplete()
 	{
 		SaveTimer();
-		AnalyticsManager.Instance.LogSceneTransition("Splash", "Game");
+		AnalyticsManager.instance.LogSceneTransition("Splash", "Game");
 		Application.LoadLevel("game");
 	}
 
 	void SaveTimer()
 	{
-		AnalyticsManager.Instance.LogTimeSpent("Time Spent on Splash Screen", (int) timer);
+		AnalyticsManager.instance.LogTimeSpent("Time Spent on Splash Screen", (int) timer);
 	}
 
     IEnumerator Flash()

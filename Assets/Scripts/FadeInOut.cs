@@ -10,11 +10,9 @@ public class FadeInOut : MonoBehaviour
 
 	public float fadeSpeed = 1.5f;          // Speed that the screen fades to and from black.
 
-	private bool sceneStarting = true;      // Whether or not the scene is still fading in.
-
 	[SerializeField] private Image image;
 
-	private enum FadeState{Idle, ToClear, ToBlack};
+	private enum FadeState{Idle, ToClear, ToBlack}; 
 
 	private FadeState state;
 

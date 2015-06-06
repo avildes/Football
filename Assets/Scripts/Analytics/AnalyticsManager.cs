@@ -8,17 +8,25 @@ public class AnalyticsManager : MonoBehaviour
     /// </summary>
     public GoogleAnalyticsV3 googleAnalytics;
 
-    public static AnalyticsManager Instance;
+    public static AnalyticsManager instance;
 
     void Awake()
     {
-        Instance = this;
-        DontDestroyOnLoad(this);
+		if(instance == null)
+		{
+			instance = this;
+			DontDestroyOnLoad(this);
+		}
+		else
+		{
+			Destroy(gameObject);
+		}
+        
     }
 
 	void Start ()
     {
-		if(Instance == null) Instance = this;
+		if(instance == null) instance = this;
 	}
 
     public void LogScene(string sceneName)
