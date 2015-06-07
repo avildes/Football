@@ -2451,15 +2451,15 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: 62ccaa2f9dd3bcd40b2d276267468bdb, type: 2}
       propertyPath: incrementosDeVelocidade.Array.data[1]
-      value: 7.5
+      value: 7.25
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: 62ccaa2f9dd3bcd40b2d276267468bdb, type: 2}
       propertyPath: incrementosDeVelocidade.Array.data[2]
-      value: 9
+      value: 8.5
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: 62ccaa2f9dd3bcd40b2d276267468bdb, type: 2}
       propertyPath: incrementosDeVelocidade.Array.data[3]
-      value: 10.5
+      value: 9.75
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: 62ccaa2f9dd3bcd40b2d276267468bdb, type: 2}
       propertyPath: intervalosDeIncrementoProbabilidadeSpawn.Array.data[0]
@@ -2499,7 +2499,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: 62ccaa2f9dd3bcd40b2d276267468bdb, type: 2}
       propertyPath: incrementosDeVelocidade.Array.data[4]
-      value: 12
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: 62ccaa2f9dd3bcd40b2d276267468bdb, type: 2}
       propertyPath: intervalosDeIncrementoDeVelocidade.Array.data[4]
@@ -2523,7 +2523,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: 62ccaa2f9dd3bcd40b2d276267468bdb, type: 2}
       propertyPath: incrementosDeVelocidade.Array.data[5]
-      value: 13.5
+      value: 12.25
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: 62ccaa2f9dd3bcd40b2d276267468bdb, type: 2}
       propertyPath: enableCollision
@@ -2547,11 +2547,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: 62ccaa2f9dd3bcd40b2d276267468bdb, type: 2}
       propertyPath: intervalosDistanciaEntreSpawns.Array.data[1]
-      value: 5
+      value: 7.5
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: 62ccaa2f9dd3bcd40b2d276267468bdb, type: 2}
       propertyPath: intervalosDistanciaEntreSpawns.Array.data[2]
-      value: 10
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: 62ccaa2f9dd3bcd40b2d276267468bdb, type: 2}
       propertyPath: enemyPrepareDistance
@@ -3036,11 +3036,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1979908257}
   m_RootOrder: 0
---- !u!1 &1794457355
+--- !u!1 &1794457355 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 100000, guid: 62ccaa2f9dd3bcd40b2d276267468bdb, type: 2}
   m_PrefabInternal: {fileID: 1596846205}
---- !u!114 &1794457356
+--- !u!114 &1794457356 stripped
 MonoBehaviour:
   m_PrefabParentObject: {fileID: 11400002, guid: 62ccaa2f9dd3bcd40b2d276267468bdb,
     type: 2}
