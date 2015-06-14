@@ -264,7 +264,7 @@ public class GameController : MonoBehaviour
         {
             if (gameState == GameState.GAMEOVER)
             {
-                AnalyticsManager.Instance.LogSceneTransition("Retry", "Game");
+                if(AnalyticsManager.instance) AnalyticsManager.Instance.LogSceneTransition("Retry", "Game");
                 gameState = GameState.TUTORIAL;
                 StartGame();
             }
@@ -298,7 +298,7 @@ public class GameController : MonoBehaviour
     {
         if (gameState == GameState.GAMEOVER)
         { 
-            AnalyticsManager.instance.LogSceneTransition("Retry", "Game");
+            if(AnalyticsManager.instance) AnalyticsManager.instance.LogSceneTransition("Retry", "Game");
             gameState = GameState.TUTORIAL; 
 			  
 
@@ -348,7 +348,7 @@ public class GameController : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Escape))
             {
-                AnalyticsManager.instance.LogSceneTransition("Retry", "Splash");
+                if(AnalyticsManager.instance) AnalyticsManager.instance.LogSceneTransition("Retry", "Splash");
 
                 Application.LoadLevel("start");
             }
@@ -547,12 +547,14 @@ public class GameController : MonoBehaviour
         //APAGAR
         //retryCount.transform.GetChild(0).gameObject.GetComponent<TextMesh>().text = (LoadRetryCount()).ToString();
 
-        AnalyticsManager.instance.LogScene("Retry");
+        if(AnalyticsManager.instance) AnalyticsManager.instance.LogScene("Retry");
 
+		Camera.main.GetComponent<Animator>().SetTrigger("Shake");
+		Handheld.Vibrate();
 		player.transform.GetChild(0).gameObject.SetActive(false);
         PlayDieFX();
 
-//        SendGameOverToBGController(true);
+        SendGameOverToBGController(true);
 
 
 //        player.SetActive(false);
@@ -569,13 +571,13 @@ public class GameController : MonoBehaviour
 //            i--;
 //        }
 
-		AnalyticsManager.instance.LogTimeSpent("Match Duration", (int)tempoTotal);
+		if(AnalyticsManager.instance) AnalyticsManager.instance.LogTimeSpent("Match Duration", (int)tempoTotal);
 
         int sc = (int)score;
         int best;
         if (LoadBest() < sc)
         {
-            AnalyticsManager.instance.LogHiScore(sc);
+			if(AnalyticsManager.instance) AnalyticsManager.instance.LogHiScore(sc);
             SaveBest(sc);
             best = sc;
         }
@@ -621,7 +623,7 @@ public class GameController : MonoBehaviour
     void PlayTouchFX()
     {
         touchSource.clip = touchFX;
-        touchSource.Play();
+		touchSource.Play ();
     }
 
     void PlayDieFX()

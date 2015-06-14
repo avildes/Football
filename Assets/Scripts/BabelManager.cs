@@ -35,9 +35,6 @@ public class BabelManager : MonoBehaviour
 
 		texts = new Dictionary<string, string>();
 
-
-
-
 		if(language == SystemLanguage.Portuguese)
 		{
 			TextAsset mJson = Resources.Load("strings_pt") as TextAsset;

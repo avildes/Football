@@ -38,7 +38,7 @@ public class BalanceClass : MonoBehaviour
 	public float enemyPrepareDistance = 2f;
 	public float enemyLookDistance = 1f;
 
-	public int scoreCheckpoint = 50;
+	public int scoreCheckpoint = 100;
 
 	public bool resetHiScore;
 

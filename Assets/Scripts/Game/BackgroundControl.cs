@@ -79,7 +79,7 @@ public class BackgroundControl : MonoBehaviour
 
     void SetGameOver(bool value)
     {
-        gameOver = value;
+//        gameOver = value;
 		if (value) GetComponent<AudioSource>().Stop();
 		else if(!GetComponent<AudioSource>().isPlaying) GetComponent<AudioSource>().Play();
     }
