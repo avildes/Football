@@ -674,9 +674,9 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 9a3c3a23694ce4b41a12df2ae73bef68, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 7959894509b31934b8e395de188a1134, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: .100000001
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -1762,9 +1762,9 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 23043de15b82d48c6ad0f7e7826f43ea, type: 3}
+  m_audioClip: {fileID: 8300000, guid: f8ce9a22dbd06d741954ede5f3c19849, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: .0309999995
+  m_Volume: .075000003
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -2590,11 +2590,11 @@ Prefab:
     - target: {fileID: 11400000, guid: 62ccaa2f9dd3bcd40b2d276267468bdb, type: 2}
       propertyPath: encoreClip
       value: 
-      objectReference: {fileID: 8300000, guid: 9a3c3a23694ce4b41a12df2ae73bef68, type: 3}
+      objectReference: {fileID: 8300000, guid: 7959894509b31934b8e395de188a1134, type: 3}
     - target: {fileID: 11400000, guid: 62ccaa2f9dd3bcd40b2d276267468bdb, type: 2}
       propertyPath: checkpointClip
       value: 
-      objectReference: {fileID: 8300000, guid: d1515f9682eaa43cdac36ac9519a83d2, type: 3}
+      objectReference: {fileID: 8300000, guid: a6df2fb42f3eb8a409233a3271ade3c5, type: 3}
     - target: {fileID: 11400000, guid: 62ccaa2f9dd3bcd40b2d276267468bdb, type: 2}
       propertyPath: scoreCheckpoint
       value: 100
@@ -2606,7 +2606,7 @@ Prefab:
     - target: {fileID: 11400000, guid: 62ccaa2f9dd3bcd40b2d276267468bdb, type: 2}
       propertyPath: touchFX
       value: 
-      objectReference: {fileID: 8300000, guid: c5a7926646c104e97bc4c4300c7fc874, type: 3}
+      objectReference: {fileID: 8300000, guid: 1d85af83579e82a42b55f44435776489, type: 3}
     - target: {fileID: 11400002, guid: 62ccaa2f9dd3bcd40b2d276267468bdb, type: 2}
       propertyPath: touchSource
       value: 
@@ -3326,44 +3326,3 @@ MeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
---- !u!1 &2064828353
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 2064828355}
-  - 114: {fileID: 2064828354}
-  m_Layer: 0
-  m_Name: AudioManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &2064828354
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2064828353}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5c381754221bd45aa9b1d824628a7cd2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  testMusic: {fileID: 0}
-  coinSfx: {fileID: 0}
---- !u!4 &2064828355
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2064828353}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 15
