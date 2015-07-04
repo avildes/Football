@@ -17,10 +17,16 @@ public class AndroidInputHandler : MonoBehaviour
 	{
 		if (workOnPC || Application.platform == RuntimePlatform.Android)
 		{
-			if (Input.GetKey(KeyCode.Home) || Input.GetKey(KeyCode.Escape) || Input.GetKey(KeyCode.Menu))
+			if (Input.GetKey(KeyCode.Home)  || Input.GetKey(KeyCode.Menu))
 			{
 				Application.Quit();
 				return;
+			}
+			else if(Input.GetKey(KeyCode.Escape))
+			{
+				if(Application.loadedLevelName == "Game") 		    Application.LoadLevel("Splash");
+				else if(Application.loadedLevelName == "Splash") 	Application.Quit();
+				else if(Application.loadedLevelName == "Credits") 	Application.LoadLevel("Splash");
 			}
 		}
 	}

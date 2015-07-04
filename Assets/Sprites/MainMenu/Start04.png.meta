@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 35cc74ee8200b41f6900116bf6d07eee
+guid: b13389cff235ea349b6cbf23a7f7a8d2
 TextureImporter:
   fileIDToRecycleName: {}
   serializedVersion: 2
@@ -17,19 +17,23 @@ TextureImporter:
     externalNormalMap: 0
     heightScale: .25
     normalMapFilter: 0
-  isReadable: 1
+  isReadable: 0
   grayScaleToAlpha: 0
   generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 8
+  cubemapConvolutionExponent: 1.5
   seamlessCubemap: 0
-  textureFormat: 12
-  maxTextureSize: 1024
+  textureFormat: -1
+  maxTextureSize: 512
   textureSettings:
     filterMode: -1
-    aniso: 0
+    aniso: 16
     mipBias: -1
-    wrapMode: 0
+    wrapMode: 1
   nPOTScale: 0
   lightmap: 0
+  rGBM: 0
   compressionQuality: 50
   spriteMode: 1
   spriteExtrude: 1
@@ -39,13 +43,11 @@ TextureImporter:
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spritePixelsToUnits: 100
   alphaIsTransparency: 1
-  textureType: 5
-  buildTargetSettings:
-  - buildTarget: iPhone
-    maxTextureSize: 1024
-    textureFormat: 33
-    compressionQuality: 50
+  textureType: 8
+  buildTargetSettings: []
   spriteSheet:
     sprites: []
   spritePackingTag: 
   userData: 
+  assetBundleName: 
+  assetBundleVariant: 

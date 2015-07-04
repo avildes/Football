@@ -7,11 +7,11 @@ public class PlayAudioOnStart : MonoBehaviour {
 	void Start () 
 	{
 		AudioSource audioSource = GetComponent<AudioSource>();
-		if(audioSource) audioSource.PlayDelayed(1f);
+		if(audioSource) if(!Application.isLoadingLevel)audioSource.PlayDelayed(.5f);
 	}
 	
 	// Update is called once per frame
 	void Update () {
-	
+
 	}
 }
