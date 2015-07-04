@@ -163,7 +163,6 @@ public class GameController : MonoBehaviour
         //SetSpawnDistance(4);
         //
 
-        AdBehaviour.Instance.HideBannerView();
 
 
     }
